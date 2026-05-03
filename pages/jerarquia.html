@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jerarquía Staff — PlanetMC Wiki</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<canvas id="starfield"></canvas>
+
+<!-- ═══ HEADER ═══ -->
+<header class="site-header" id="siteHeader">
+  <button class="sidebar-toggle" id="sidebarToggle" aria-label="Abrir menú">☰</button>
+  <a href="index.html" class="logo-link">
+    <img src="assets/img/logo.png" class="logo-img" alt="PlanetMC" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <span class="logo-fallback" style="display:none">🌍</span>
+    <span class="logo-text">PLANET <span class="logo-accent">MC</span></span>
+  </a>
+  <div class="header-center">
+    <div class="search-wrap" style="position:relative">
+      <span class="search-icon">🔍</span>
+      <input type="text" class="search-input" placeholder="Buscar en la wiki…">
+      <kbd>⌘K</kbd>
+      <ul class="search-dropdown" hidden></ul>
+    </div>
+  </div>
+  <div class="header-right">
+    <nav class="social-nav">
+      <a href="https://discord.gg/planetmc" target="_blank" class="social-btn discord"><span>Discord</span></a>
+      <a href="https://store.planetmc.net" target="_blank" class="social-btn" style="background:rgba(124,58,237,.18);color:var(--neon-lilac);border-color:rgba(124,58,237,.35)"><span>Tienda</span></a>
+    </nav>
+  </div>
+</header>
+
+<!-- ═══ LAYOUT ═══ -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-inner">
+      <div class="nav-section">
+        <span class="nav-label">INFORMACIÓN</span>
+        <ul class="nav-list">
+          <li><a href="pages/normas.html" class="nav-item"><span class="nav-icon">📋</span> Normas del Servidor</a></li>
+        </ul>
+      </div>
+      <div class="nav-section">
+        <span class="nav-label">GUÍAS</span>
+        <div class="nav-group">
+          <button class="nav-group-header" aria-expanded="false">
+            <span class="nav-icon">🚀</span> Cómo unirse <span class="chevron">▶</span>
+          </button>
+          <ul class="nav-sublist">
+            <li><a href="pages/como-ingresar.html" class="nav-item"><span class="nav-icon">☕</span> Java Edition</a></li>
+            <li><a href="pages/como-ingresar.html#bedrock" class="nav-item"><span class="nav-icon">💎</span> Bedrock Edition</a></li>
+          </ul>
+        </div>
+        <div class="nav-group">
+          <button class="nav-group-header" aria-expanded="false">
+            <span class="nav-icon">🌿</span> Survival <span class="chevron">▶</span>
+          </button>
+          <ul class="nav-sublist">
+            <li><a href="pages/survival-primeros-pasos.html" class="nav-item"><span class="nav-icon">👣</span> Primeros pasos</a></li>
+            <li><a href="pages/survival-como-jugar.html" class="nav-item"><span class="nav-icon">🎮</span> Cómo jugar</a></li>
+            <li><a href="pages/survival-vender.html" class="nav-item"><span class="nav-icon">💰</span> Vender ítems</a></li>
+            <li><a href="pages/survival-protecciones.html" class="nav-item"><span class="nav-icon">🛡️</span> Protecciones</a></li>
+            <li><a href="pages/survival-subasta.html" class="nav-item"><span class="nav-icon">🔨</span> Subasta</a></li>
+            <li><a href="pages/survival-warps.html" class="nav-item"><span class="nav-icon">🌀</span> Warps</a></li>
+            <li><a href="pages/survival-tienda.html" class="nav-item"><span class="nav-icon">🏪</span> La Tienda</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="nav-section">
+        <span class="nav-label">IMPORTANTE</span>
+        <ul class="nav-list">
+          <li><a href="https://store.planetmc.net" target="_blank" class="nav-item external"><span class="nav-icon">🛒</span> Tienda <span class="ext-icon">↗</span></a></li>
+          <li><a href="votar.html" class="nav-item"><span class="nav-icon">🗳️</span> Votar</a></li>
+          <li><a href="redes.html" class="nav-item"><span class="nav-icon">🌐</span> Redes Sociales</a></li>
+          <li><a href="jerarquia.html" class="nav-item active"><span class="nav-icon">🧑‍🚀</span> Jerarquía Staff</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="sidebar-deco"></div>
+  </aside>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- MAIN -->
+  <main class="main-content">
+
+    <div style="margin-bottom:48px">
+      <div class="page-badge">
+        <span style="display:inline-block;width:28px;height:2px;background:var(--neon-cyan);border-radius:2px"></span>
+        // EQUIPO &amp; JERARQUÍA ◇
+      </div>
+      <h1 style="font-family:var(--font-body);font-size:clamp(2rem,4vw,3rem);font-weight:700;color:var(--text-primary);margin-bottom:12px">
+        Nuestro Staff
+      </h1>
+      <p style="color:var(--text-secondary);font-size:1rem;font-weight:500">
+        El equipo detrás de la experiencia. Estructura, roles y miembros activos.
+      </p>
+    </div>
+
+    <!-- Grid de rangos -->
+    <div class="staff-grid">
+
+      <!-- OWNER -->
+      <div class="staff-card" style="--rank-color:#f59e0b;--rank-glow:rgba(245,158,11,.3);grid-column:span 1">
+        <div class="staff-card-header">
+          <div class="staff-avatar" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">
+            <span>👑</span>
+          </div>
+          <div class="staff-role-info">
+            <h3 class="staff-role-name" style="color:#f59e0b">Owner</h3>
+            <p class="staff-role-desc">Fundador y máxima autoridad del servidor</p>
+          </div>
+          <div class="staff-lvl-badge" style="--lvl-color:#f59e0b">LVL 5</div>
+        </div>
+        <div class="staff-members-label">MIEMBROS</div>
+        <ul class="staff-members-list">
+          <li class="staff-member">
+            <div class="staff-member-avatar" style="background:#f59e0b">xT</div>
+            <span class="staff-member-name">xTiburon</span>
+            <span class="staff-member-dot online"></span>
+          </li>
+          <li class="staff-member">
+            <div class="staff-member-avatar" style="background:#f59e0b">sS</div>
+            <span class="staff-member-name">sSylents5</span>
+            <span class="staff-member-dot online"></span>
+          </li>
+          <li class="staff-member">
+            <div class="staff-member-avatar" style="background:#f59e0b">zk</div>
+            <span class="staff-member-name">zkross</span>
+            <span class="staff-member-dot online"></span>
+          </li>
+          <li class="staff-member">
+            <div class="staff-member-avatar" style="background:#f59e0b">xp</div>
+            <span class="staff-member-name">xxarokiproxx</span>
+            <span class="staff-member-dot online"></span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- ADMIN -->
+      <div class="staff-card" style="--rank-color:#ef4444;--rank-glow:rgba(239,68,68,.25)">
+        <div class="staff-card-header">
+          <div class="staff-avatar" style="background:linear-gradient(135deg,#ef4444,#ec4899)">
+            <span>🛡️</span>
+          </div>
+          <div class="staff-role-info">
+            <h3 class="staff-role-name" style="color:#ef4444">Admin</h3>
+            <p class="staff-role-desc">Gestión del servidor y decisiones clave</p>
+          </div>
+          <div class="staff-lvl-badge" style="--lvl-color:#ef4444">LVL 4</div>
+        </div>
+        <div class="staff-members-label">MIEMBROS</div>
+        <p class="staff-vacant">— Vacante / Por anunciar —</p>
+      </div>
+
+      <!-- MODERADOR -->
+      <div class="staff-card" style="--rank-color:#a855f7;--rank-glow:rgba(168,85,247,.25)">
+        <div class="staff-card-header">
+          <div class="staff-avatar" style="background:linear-gradient(135deg,#a855f7,#6366f1)">
+            <span>⚙️</span>
+          </div>
+          <div class="staff-role-info">
+            <h3 class="staff-role-name" style="color:#a855f7">Moderador</h3>
+            <p class="staff-role-desc">Control de chat, sanciones y orden</p>
+          </div>
+          <div class="staff-lvl-badge" style="--lvl-color:#a855f7">LVL 3</div>
+        </div>
+        <div class="staff-members-label">MIEMBROS</div>
+        <p class="staff-vacant">— Vacante / Por anunciar —</p>
+      </div>
+
+      <!-- HELPER -->
+      <div class="staff-card" style="--rank-color:#00d4aa;--rank-glow:rgba(0,212,170,.25)">
+        <div class="staff-card-header">
+          <div class="staff-avatar" style="background:linear-gradient(135deg,#00d4aa,#38bdf8)">
+            <span>🌟</span>
+          </div>
+          <div class="staff-role-info">
+            <h3 class="staff-role-name" style="color:#00d4aa">Helper</h3>
+            <p class="staff-role-desc">Apoyo a jugadores nuevos y resolución de dudas</p>
+          </div>
+          <div class="staff-lvl-badge" style="--lvl-color:#00d4aa">LVL 2</div>
+        </div>
+        <div class="staff-members-label">MIEMBROS</div>
+        <p class="staff-vacant">— Vacante / Por anunciar —</p>
+      </div>
+
+      <!-- SOPORTE -->
+      <div class="staff-card" style="--rank-color:#38bdf8;--rank-glow:rgba(56,189,248,.25)">
+        <div class="staff-card-header">
+          <div class="staff-avatar" style="background:linear-gradient(135deg,#38bdf8,#6366f1)">
+            <span>🎧</span>
+          </div>
+          <div class="staff-role-info">
+            <h3 class="staff-role-name" style="color:#38bdf8">Soporte</h3>
+            <p class="staff-role-desc">Tickets y atención al jugador en Discord</p>
+          </div>
+          <div class="staff-lvl-badge" style="--lvl-color:#38bdf8">LVL 1</div>
+        </div>
+        <div class="staff-members-label">MIEMBROS</div>
+        <p class="staff-vacant">— Vacante / Por anunciar —</p>
+      </div>
+
+    </div>
+
+    <!-- CTA unirse al staff -->
+    <div style="text-align:center;margin-top:56px;padding-top:40px;border-top:1px solid var(--border)">
+      <p style="font-family:var(--font-mono);font-size:12px;letter-spacing:3px;color:var(--text-muted);text-transform:uppercase;margin-bottom:20px">
+        ¿QUIERES•SER PARTE DE <span style="color:var(--neon-cyan)">NUESTRO STAFF</span>?
+      </p>
+      <a href="https://discord.gg/planetmc" target="_blank" class="btn-primary" style="text-decoration:none">
+        <span>💬</span> APLICAR AHORA
+      </a>
+    </div>
+
+  </main>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="site-footer has-sidebar">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div style="display:flex;align-items:center;gap:10px">
+        <img src="assets/img/logo.png" width="28" height="28" style="object-fit:contain;filter:drop-shadow(0 0 6px rgba(0,245,255,.4))" alt="Logo" onerror="this.style.display='none'">
+        <a href="index.html" class="logo-link" style="gap:6px">
+          <span class="logo-text" style="font-size:1rem">PLANET <span class="logo-accent">MC</span></span>
+        </a>
+      </div>
+      <p>Wiki oficial de la comunidad</p>
+    </div>
+    <nav class="footer-links">
+      <a href="pages/normas.html">Normas</a>
+      <a href="pages/como-ingresar.html">Ingresar</a>
+      <a href="https://discord.gg/planetmc" target="_blank">Discord</a>
+      <a href="https://store.planetmc.net" target="_blank">Tienda</a>
+    </nav>
+    <p class="footer-copy">© 2025 PlanetMC · Todos los derechos reservados</p>
+  </div>
+</footer>
+
+<style>
+.staff-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+@media(max-width:900px){ .staff-grid{grid-template-columns:repeat(2,1fr)} }
+@media(max-width:580px){ .staff-grid{grid-template-columns:1fr} }
+
+.staff-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(255,255,255,.07);
+  border-top: 2px solid var(--rank-color, var(--neon-cyan));
+  border-radius: var(--r-lg);
+  padding: 24px;
+  animation: fadeSlideUp .5s both;
+  transition: all .3s cubic-bezier(.4,0,.2,1);
+  position: relative;
+  overflow: hidden;
+}
+
+.staff-card:nth-child(1){animation-delay:.05s}
+.staff-card:nth-child(2){animation-delay:.10s}
+.staff-card:nth-child(3){animation-delay:.15s}
+.staff-card:nth-child(4){animation-delay:.20s}
+.staff-card:nth-child(5){animation-delay:.25s}
+
+.staff-card:hover {
+  box-shadow: 0 8px 32px var(--rank-glow, rgba(0,245,255,.2));
+  border-color: var(--rank-color, var(--neon-cyan));
+  transform: translateY(-3px);
+}
+
+.staff-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.staff-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+  box-shadow: 0 0 16px var(--rank-glow, rgba(0,245,255,.3));
+}
+
+.staff-role-info { flex: 1; min-width: 0; }
+
+.staff-role-name {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: .5px;
+  margin-bottom: 4px;
+}
+
+.staff-role-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.staff-lvl-badge {
+  background: rgba(0,0,0,.4);
+  border: 1px solid var(--lvl-color, var(--neon-cyan));
+  color: var(--lvl-color, var(--neon-cyan));
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 100px;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+.staff-members-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.staff-members-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.staff-member {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,255,255,.04);
+  border-radius: var(--r-sm);
+  padding: 8px 12px;
+  transition: background .15s;
+}
+
+.staff-member:hover { background: rgba(255,255,255,.07); }
+
+.staff-member-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.staff-member-name {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.staff-member-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.staff-member-dot.online { background: var(--neon-green); box-shadow: 0 0 6px rgba(0,255,136,.6); }
+.staff-member-dot.offline { background: var(--text-muted); }
+
+.staff-vacant {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-style: italic;
+  text-align: center;
+  padding: 20px 0;
+  border: 1px dashed rgba(255,255,255,.08);
+  border-radius: var(--r-sm);
+}
+</style>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
