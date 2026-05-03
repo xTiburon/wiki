@@ -5,28 +5,23 @@
 ```
 wiki-planetmc/
 │
-├── index.html                    ← Página principal (inicio)
+├── components/
+│   ├── header.html
+│   ├── sidebar.html
+│   └── footer.html
+│
+├── pages/
+│   ├── como-ingresar.html
+│   ├── normas.html
+│   └── ...
 │
 ├── assets/
-│   ├── css/
-│   │   └── style.css             ← Estilos generales (EDITAR AQUÍ los colores/fuentes)
-│   ├── js/
-│   │   └── main.js               ← JavaScript (starfield, búsqueda, sidebar)
+│   ├── css/style.css
+│   ├── js/main.js
 │   └── img/
-│       └── logo.png              ← 🖼️ PON TU LOGO AQUÍ (36x36px recomendado)
 │
-└── pages/
-    ├── normas.html               ← Normas del servidor
-    ├── como-ingresar.html        ← Cómo conectarse al servidor
-    ├── java.html                 ← Guía para Java Edition
-    ├── bedrock.html              ← Guía para Bedrock Edition
-    ├── survival-primeros-pasos.html
-    ├── survival-como-jugar.html
-    ├── survival-vender.html
-    ├── survival-protecciones.html
-    ├── survival-subasta.html
-    ├── survival-warps.html
-    ├── survival-tienda.html
+├── index.html
+├── _template.html
 
 ```
 
