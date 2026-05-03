@@ -1,113 +1,200 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Normas Principales — PlanetMC Wiki</title>
-  <link rel="stylesheet" href="../assets/css/style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Normas del Servidor — PlanetMC Wiki</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
 
 <canvas id="starfield"></canvas>
 
-<div id="wiki-header"></div>
+<!-- ═══ HEADER ═══ -->
+<header class="site-header" id="siteHeader">
+  <button class="sidebar-toggle" id="sidebarToggle" aria-label="Abrir menú">☰</button>
+  <a href="../index.html" class="logo-link">
+    <img src="../assets/img/logo.png" class="logo-img" alt="PlanetMC" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <span class="logo-fallback" style="display:none">🌍</span>
+    <span class="logo-text">PLANET <span class="logo-accent">MC</span></span>
+  </a>
+  <div class="header-center">
+    <div class="search-wrap" style="position:relative">
+      <span class="search-icon">🔍</span>
+      <input type="text" class="search-input" placeholder="Buscar en la wiki…">
+      <kbd>⌘K</kbd>
+      <ul class="search-dropdown" hidden></ul>
+    </div>
+  </div>
+  <div class="header-right">
+    <nav class="social-nav">
+      <a href="https://discord.gg/planetmc" target="_blank" class="social-btn discord"><span>Discord</span></a>
+      <a href="https://store.planetmc.net" target="_blank" class="social-btn" style="background:rgba(124,58,237,.18);color:var(--neon-lilac);border-color:rgba(124,58,237,.35)"><span>Tienda</span></a>
+    </nav>
+  </div>
+</header>
 
+<!-- ═══ LAYOUT ═══ -->
 <div class="layout">
 
-  <div id="wiki-sidebar"></div>
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-inner">
+      <div class="nav-section">
+        <span class="nav-label">INFORMACIÓN</span>
+        <ul class="nav-list">
+          <li><a href="normas.html" class="nav-item active"><span class="nav-icon">📋</span> Normas del Servidor</a></li>
+        </ul>
+      </div>
+      <div class="nav-section">
+        <span class="nav-label">GUÍAS</span>
+        <div class="nav-group">
+          <button class="nav-group-header" aria-expanded="false">
+            <span class="nav-icon">🚀</span> Cómo unirse <span class="chevron">▶</span>
+          </button>
+          <ul class="nav-sublist">
+            <li><a href="como-ingresar.html" class="nav-item"><span class="nav-icon">☕</span> Java Edition</a></li>
+            <li><a href="como-ingresar.html#bedrock" class="nav-item"><span class="nav-icon">💎</span> Bedrock Edition</a></li>
+          </ul>
+        </div>
+        <div class="nav-group">
+          <button class="nav-group-header" aria-expanded="false">
+            <span class="nav-icon">🌿</span> Survival <span class="chevron">▶</span>
+          </button>
+          <ul class="nav-sublist">
+            <li><a href="survival-primeros-pasos.html" class="nav-item"><span class="nav-icon">👣</span> Primeros pasos</a></li>
+            <li><a href="survival-como-jugar.html" class="nav-item"><span class="nav-icon">🎮</span> Cómo jugar</a></li>
+            <li><a href="survival-vender.html" class="nav-item"><span class="nav-icon">💰</span> Vender ítems</a></li>
+            <li><a href="survival-protecciones.html" class="nav-item"><span class="nav-icon">🛡️</span> Protecciones</a></li>
+            <li><a href="survival-subasta.html" class="nav-item"><span class="nav-icon">🔨</span> Subasta</a></li>
+            <li><a href="survival-warps.html" class="nav-item"><span class="nav-icon">🌀</span> Warps</a></li>
+            <li><a href="survival-tienda.html" class="nav-item"><span class="nav-icon">🏪</span> La Tienda</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="nav-section">
+        <span class="nav-label">IMPORTANTE</span>
+        <ul class="nav-list">
+          <li><a href="https://store.planetmc.net" target="_blank" class="nav-item external"><span class="nav-icon">🛒</span> Tienda <span class="ext-icon">↗</span></a></li>
+          <li><a href="../votar.html" class="nav-item"><span class="nav-icon">🗳️</span> Votar</a></li>
+          <li><a href="../redes.html" class="nav-item"><span class="nav-icon">🌐</span> Redes Sociales</a></li>
+          <li><a href="../jerarquia.html" class="nav-item"><span class="nav-icon">🧑‍🚀</span> Jerarquía Staff</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="sidebar-deco"></div>
+  </aside>
 
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- MAIN -->
   <main class="main-content">
-      <div class="page-header">
-        <div class="breadcrumb">
-          <a href="../index.html">Inicio</a> › <a href="#">Información</a> › <span>Normas Principales</span>
+
+    <div class="page-header">
+      <div class="breadcrumb">
+        <a href="../index.html">Inicio</a>
+        <span>›</span>
+        <span>Normas del Servidor</span>
+      </div>
+      <h1 style="margin-top:12px">Normas del Servidor</h1>
+    </div>
+
+    <div class="page-content">
+      <h2>Normas Generales</h2>
+      <p>Para mantener una comunidad sana y divertida, todos los jugadores deben respetar las siguientes normas. El incumplimiento puede resultar en advertencias, expulsión temporal o ban permanente.</p>
+
+      <div class="rules-list" style="margin-top:24px">
+        <div class="rule-card">
+          <span class="rule-num">01</span>
+          <div class="rule-sep"></div>
+          <p class="rule-text"><strong>Respeto ante todo.</strong> Trata a todos los jugadores con respeto. No se tolerará insultos, acoso ni lenguaje ofensivo en ningún canal.</p>
         </div>
-        <h1>📋 Normas Principales</h1>
+        <div class="rule-card">
+          <span class="rule-num">02</span>
+          <div class="rule-sep"></div>
+          <p class="rule-text"><strong>No hacer trampa.</strong> El uso de hacks, mods no autorizados o cualquier software que otorgue ventaja injusta está prohibido.</p>
+        </div>
+        <div class="rule-card">
+          <span class="rule-num">03</span>
+          <div class="rule-sep"></div>
+          <p class="rule-text"><strong>No spam ni publicidad.</strong> Queda prohibido el spam en el chat y la publicidad de otros servidores o sitios externos.</p>
+        </div>
+        <div class="rule-card">
+          <span class="rule-num">04</span>
+          <div class="rule-sep"></div>
+          <p class="rule-text"><strong>No griefing.</strong> Destruir o modificar construcciones ajenas sin permiso está estrictamente prohibido.</p>
+        </div>
+        <div class="rule-card">
+          <span class="rule-num">05</span>
+          <div class="rule-sep"></div>
+          <p class="rule-text"><strong>No robar.</strong> Tomar ítems de otros jugadores sin su consentimiento, ya sea de chests, mobs farm u otras construcciones, está prohibido.</p>
+        </div>
+        <div class="rule-card">
+          <span class="rule-num">06</span>
+          <div class="rule-sep"></div>
+          <p class="rule-text"><strong>Seguir las indicaciones del staff.</strong> Las decisiones del equipo de moderación deben ser respetadas. Si consideras que una sanción es injusta, abre un ticket en Discord.</p>
+        </div>
+        <div class="rule-card">
+          <span class="rule-num">07</span>
+          <div class="rule-sep"></div>
+          <p class="rule-text"><strong>No abusar de bugs o glitches.</strong> Si encuentras un error, repórtalo al staff. Explotarlo para obtener ventajas será sancionado.</p>
+        </div>
+        <div class="rule-card">
+          <span class="rule-num">08</span>
+          <div class="rule-sep"></div>
+          <p class="rule-text"><strong>Una cuenta por jugador.</strong> No está permitido usar múltiples cuentas para saltarse sanciones o para obtener ventajas.</p>
+        </div>
       </div>
 
-      <div class="page-content">
-
-        <div class="warn-box">
-          El desconocimiento de las normas no exime de su cumplimiento. Lee este documento completo antes de jugar.
-        </div>
-
-        <h2>1. Respeto hacia todos los jugadores</h2>
-        <p>
-          En <strong>PlanetMC</strong> la convivencia es lo más importante. Está <strong>prohibido</strong>:
-        </p>
-        <ul>
-          <li>Insultar, acosar o discriminar a cualquier jugador por cualquier motivo.</li>
-          <li>Amenazar a otros jugadores dentro o fuera del juego.</li>
-          <li>Compartir información personal de otros jugadores sin su consentimiento (doxxing).</li>
-          <li>Usar lenguaje ofensivo, racista, homofóbico o discriminatorio.</li>
-        </ul>
-
-        <h2>2. Prohibido el Griefing y el Robo</h2>
-        <p>
-          El servidor tiene un sistema de <strong>protecciones de terreno</strong>. Sin embargo, cualquier
-          intento de griefing o robo fuera de zonas protegidas también está prohibido y sancionado.
-        </p>
-        <ul>
-          <li>Está prohibido destruir construcciones ajenas.</li>
-          <li>Está prohibido robar objetos o recursos de otros jugadores.</li>
-          <li>Hacer trampas para entrar en terrenos protegidos es motivo de baneo permanente.</li>
-        </ul>
-
-        <div class="tip-box">
-          Protege tu terreno lo antes posible. Consulta <a href="survival-protecciones.html">esta guía</a> para aprender cómo hacerlo.
-        </div>
-
-        <h2>3. Prohibido el Spam y Publicidad</h2>
-        <ul>
-          <li>No envíes mensajes repetidos o sin sentido en el chat.</li>
-          <li>Está prohibido publicitar otros servidores de Minecraft.</li>
-          <li>No uses el chat para vender o intercambiar ítems de forma excesiva (usa los sistemas del servidor).</li>
-        </ul>
-
-        <h2>4. Uso de Hacks y Trampas</h2>
-        <p>El uso de cualquier modificación que otorgue ventaja injusta está <strong>terminantemente prohibido</strong>:</p>
-        <ul>
-          <li>Hacks, cheats o clients modificados (Killaura, Xray, Fly, Speed, etc.).</li>
-          <li>Exploits o bugs del servidor para obtener ventajas.</li>
-          <li>Duplicación de ítems mediante bugs.</li>
-          <li>El uso de macros o autoclickers en el juego.</li>
-        </ul>
-
-        <h2>5. Comportamiento en la Comunidad</h2>
-        <ul>
-          <li>Sigue las instrucciones del staff del servidor en todo momento.</li>
-          <li>No te hagas pasar por un miembro del staff.</li>
-          <li>Los conflictos deben resolverse abriendo un ticket en Discord, no en el chat público.</li>
-          <li>El PvP solo está permitido en zonas habilitadas para ello o con consentimiento mutuo.</li>
-        </ul>
-
-        <h2>6. Cuentas y Usuarios</h2>
-        <ul>
-          <li>Cada jugador puede tener <strong>una sola cuenta</strong> activa en el servidor.</li>
-          <li>Compartir cuentas no está permitido.</li>
-          <li>Si tu cuenta es baneada, intentar entrar con otra cuenta resultará en baneo de IP.</li>
-        </ul>
-
-        <h2>Sanciones</h2>
-        <p>Las sanciones pueden variar según la gravedad de la falta:</p>
-        <ul>
-          <li><strong>Advertencia</strong> — Primera falta leve.</li>
-          <li><strong>Mute temporal</strong> — Spam, lenguaje ofensivo.</li>
-          <li><strong>Kick</strong> — Comportamiento disruptivo puntual.</li>
-          <li><strong>Baneo temporal</strong> — Infracciones repetidas o graves.</li>
-          <li><strong>Baneo permanente</strong> — Hacks, griefing grave, acoso reiterado.</li>
-        </ul>
-
-        <div class="info-box">
-          Si crees que has sido sancionado injustamente, abre un ticket en nuestro <a href="https://discord.gg/TULINK" target="_blank">servidor de Discord</a>.
-        </div>
-
+      <div class="warn-box" style="margin-top:32px">
+        El incumplimiento reiterado de las normas puede resultar en un <strong>ban permanente</strong> sin posibilidad de apelación.
       </div>
-    </main>
+
+      <h2>Normas del Chat</h2>
+      <ul>
+        <li>No usar mayúsculas excesivas (CAPS LOCK).</li>
+        <li>No inundar el chat con mensajes repetidos.</li>
+        <li>Mantener conversaciones en el idioma del servidor (español).</li>
+        <li>No compartir información personal de otros jugadores.</li>
+      </ul>
+
+      <h2>Normas de Construcción</h2>
+      <ul>
+        <li>No construir estructuras ofensivas o inapropiadas.</li>
+        <li>Respetar los límites de terreno de otros jugadores.</li>
+        <li>No bloquear recursos naturales de acceso comunitario.</li>
+        <li>Mantener el entorno estético de las zonas públicas.</li>
+      </ul>
+
+      <div class="tip-box">
+        ¿Tienes dudas sobre las normas? Contáctanos en nuestro <strong>Discord</strong> y un miembro del staff te ayudará.
+      </div>
+    </div>
+
+  </main>
 </div>
 
-<div id="wiki-footer"></div>
+<!-- ═══ FOOTER ═══ -->
+<footer class="site-footer has-sidebar">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div style="display:flex;align-items:center;gap:10px">
+        <img src="../assets/img/logo.png" width="28" height="28" style="object-fit:contain;filter:drop-shadow(0 0 6px rgba(0,245,255,.4))" alt="Logo" onerror="this.style.display='none'">
+        <a href="../index.html" class="logo-link" style="gap:6px">
+          <span class="logo-text" style="font-size:1rem">PLANET <span class="logo-accent">MC</span></span>
+        </a>
+      </div>
+      <p>Wiki oficial de la comunidad</p>
+    </div>
+    <nav class="footer-links">
+      <a href="normas.html">Normas</a>
+      <a href="como-ingresar.html">Ingresar</a>
+      <a href="https://discord.gg/planetmc" target="_blank">Discord</a>
+      <a href="https://store.planetmc.net" target="_blank">Tienda</a>
+    </nav>
+    <p class="footer-copy">© 2026 PlanetMC · Todos los derechos reservados</p>
+  </div>
+</footer>
 
 <script src="../assets/js/main.js"></script>
 </body>
