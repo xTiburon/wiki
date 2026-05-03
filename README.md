@@ -27,8 +27,7 @@ wiki-planetmc/
     ├── survival-subasta.html
     ├── survival-warps.html
     ├── survival-tienda.html
-    ├── chat-colores.html
-    └── lista-mods.html
+
 ```
 
 ---
