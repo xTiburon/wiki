@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!--
+    🖊️ CAMBIA EL TÍTULO: reemplaza "Nombre de la Página" con el título real
+  -->
+  <title>Nombre de la Página — PlanetMC Wiki</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<canvas id="starfield"></canvas>
+
+<!-- Los componentes se cargan automáticamente por main.js — NO los edites aquí -->
+<div id="wiki-header"></div>
+
+<div class="layout">
+
+  <div id="wiki-sidebar"></div>
+
+  <!-- ═══════════════════════════════════════════════
+       CONTENIDO DE LA PÁGINA  ← Solo edita esta parte
+  ════════════════════════════════════════════════════ -->
+  <main class="main-content">
+
+    <!-- ENCABEZADO DE LA PÁGINA -->
+    <div class="page-header">
+      <div class="breadcrumb">
+        <!--
+          🖊️ Ajusta el breadcrumb según la sección:
+          Inicio › Información › Esta Página
+          Inicio › Survival › Esta Página
+          Inicio › Tutoriales › Esta Página
+        -->
+        <a href="../index.html">Inicio</a> › <a href="#">Sección</a> › <span>Nombre de la Página</span>
+      </div>
+      <!-- 🖊️ Cambia el emoji y el título -->
+      <h1>🗂️ Nombre de la Página</h1>
+    </div>
+
+    <div class="page-content">
+
+      <!--
+        ═══════════════════════════════════════════════════════
+        BLOQUES DISPONIBLES — usa los que necesites:
+        ═══════════════════════════════════════════════════════
+
+        INFO (azul):    <div class="info-box">Texto informativo.</div>
+        TIP (verde):    <div class="tip-box">Consejo útil.</div>
+        ADVERTENCIA:    <div class="warn-box">Texto importante.</div>
+        CÓDIGO:         <pre><code>/comando ejemplo</code></pre>
+
+        ═══════════════════════════════════════════════════════
+      -->
+
+      <!-- Encabezado de sección -->
+      <h2>Título de sección</h2>
+      <p>Texto explicativo de esta sección...</p>
+
+      <!-- Lista de ítems -->
+      <ul>
+        <li>Ítem 1</li>
+        <li>Ítem 2</li>
+        <li>Ítem 3</li>
+      </ul>
+
+      <!-- Ejemplo de tip box -->
+      <div class="tip-box">
+        💡 Aquí va un consejo útil para el jugador.
+      </div>
+
+      <!-- Ejemplo de advertencia -->
+      <div class="warn-box">
+        ⚠️ Aquí va una advertencia importante.
+      </div>
+
+      <!-- Ejemplo de bloque de código / comandos -->
+      <pre><code>/comando ejemplo     → Descripción del comando
+/otro-comando        → Descripción</code></pre>
+
+    </div><!-- /page-content -->
+  </main>
+
+</div>
+
+<div id="wiki-footer"></div>
+
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

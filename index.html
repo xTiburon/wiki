@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PlanetMC Wiki</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<canvas id="starfield"></canvas>
+
+<div id="wiki-header"></div>
+
+<div class="layout">
+
+  <div id="wiki-sidebar"></div>
+
+  <main class="main-content" id="mainContent">
+
+    <section class="hero">
+      <div class="hero-bg-glow"></div>
+      <div class="hero-content">
+        <h1 class="hero-title">Bienvenid@ a <span class="accent">PlanetMC</span></h1>
+        <p class="hero-subtitle">
+          Tu servidor Minecraft hispanohablante favorito. Aquí encontrarás todo lo necesario para comenzar tu aventura.
+        </p>
+        <div class="hero-cta">
+          <a href="pages/survival-primeros-pasos.html" class="btn-primary">Empezar ahora</a>
+          <a href="pages/normas.html" class="btn-secondary">Ver Normas</a>
+        </div>
+      </div>
+      <div class="hero-chars">
+        <div class="hero-char char-1">🐢</div>
+        <div class="hero-char char-2">🐤</div>
+        <div class="hero-char char-3">🦎</div>
+      </div>
+    </section>
+
+    <section class="intro-section content-box">
+      <p>¡Nos alegra darte la bienvenida a <strong>PlanetMC</strong>!</p>
+      <p>
+        Somos una network hispanohablante con <strong>modalidades variadas</strong> como <em>Survival</em>, además de
+        <strong>eventos únicos</strong> pensados para que disfrutes una experiencia <strong>divertida, estable y con futuro</strong>.
+        Seguimos trabajando en <strong>nuevas modalidades y contenido exclusivo</strong> para que siempre tengas algo nuevo que explorar.
+      </p>
+      <p>
+        En este sitio encontrarás todo lo necesario: <strong>reglas de convivencia, consejos útiles y tutoriales
+        paso a paso</strong> para cada modalidad. Conocer y respetar las normas es clave para mantener un ambiente
+        <strong>justo, amigable y seguro</strong> para todos.
+      </p>
+      <p class="highlight-line">🌟 Prepárate para la aventura... tu próxima historia comienza aquí. <strong>¡Buena suerte y diviértete!</strong> 🌟</p>
+    </section>
+
+    <section class="faq-section">
+      <h2 class="section-title">Preguntas Frecuentes</h2>
+      <div class="faq-grid">
+        <a href="pages/normas.html" class="faq-card">
+          <div class="faq-card-icon">📋</div>
+          <h3>¿Cuáles son las reglas del servidor?</h3>
+          <p>Conoce todas las normas para una experiencia justa y divertida.</p>
+        </a>
+        <a href="pages/como-ingresar.html" class="faq-card">
+          <div class="faq-card-icon">🚀</div>
+          <h3>¿Cómo ingreso a PlanetMC?</h3>
+          <p>Guía paso a paso para conectarte desde Java o Bedrock.</p>
+        </a>
+        <a href="pages/survival-primeros-pasos.html" class="faq-card">
+          <div class="faq-card-icon">🌿</div>
+          <h3>¿Cómo empiezo en Survival?</h3>
+          <p>Todo lo que necesitas saber para comenzar tu aventura en Survival.</p>
+        </a>
+        <a href="pages/survival-vender.html" class="faq-card">
+          <div class="faq-card-icon">💰</div>
+          <h3>¿Cómo gano dinero en el servidor?</h3>
+          <p>Aprende a vender ítems y prosperar en la economía del servidor.</p>
+        </a>
+        <a href="pages/survival-protecciones.html" class="faq-card">
+          <div class="faq-card-icon">🛡️</div>
+          <h3>¿Cómo protejo mi terreno?</h3>
+          <p>Gestiona tus protecciones y mantén tu construcción segura.</p>
+        </a>
+        <a href="pages/survival-subasta.html" class="faq-card">
+          <div class="faq-card-icon">🔨</div>
+          <h3>¿Cómo funciona la subasta?</h3>
+          <p>Compra y vende artículos raros en la subasta del servidor.</p>
+        </a>
+      </div>
+    </section>
+
+    <section class="server-ip-section content-box">
+      <h2 class="section-title">Únete al Servidor</h2>
+      <div class="ip-cards">
+        <div class="ip-card">
+          <span class="ip-label">☕ Java Edition</span>
+          <code class="ip-code" id="javaIP" onclick="copyIP('javaIP', this)">play.planetmc.net</code>
+          <span class="copy-hint">Click para copiar</span>
+        </div>
+        <div class="ip-card">
+          <span class="ip-label">💎 Bedrock Edition</span>
+          <code class="ip-code" id="bedrockIP" onclick="copyIP('bedrockIP', this)">bedrock.planetmc.net</code>
+          <span class="copy-hint">Click para copiar</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div id="wiki-footer"></div>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
