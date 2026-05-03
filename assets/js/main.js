@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════
-   PLANETMC — main.js
+   PLANETMC — main.js v2.0
    ═══════════════════════════════════════════════ */
 
 /* ── Starfield ── */
@@ -25,10 +25,9 @@
         baseOpacity: Math.random() * 0.7 + 0.15,
         phase: Math.random() * Math.PI * 2,
         speed: Math.random() * 0.018 + 0.005,
-        color: Math.random() > 0.85 ? '#a78bfa' : Math.random() > 0.7 ? '#7dd3fc' : '#fff'
+        color: Math.random() > 0.85 ? 'purple' : Math.random() > 0.7 ? 'blue' : 'white'
       });
     }
-    // nebula blobs
     for (let i = 0; i < 3; i++) {
       nebulae.push({
         x: Math.random() * W,
@@ -41,7 +40,6 @@
 
   function draw() {
     ctx.clearRect(0, 0, W, H);
-    // nebulae
     nebulae.forEach(n => {
       const g = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r);
       g.addColorStop(0, n.color);
@@ -51,20 +49,14 @@
       ctx.fillStyle = g;
       ctx.fill();
     });
-    // stars
     stars.forEach(s => {
       s.phase += s.speed;
       const op = s.baseOpacity * (0.5 + 0.5 * Math.sin(s.phase));
       ctx.beginPath();
       ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = s.color.replace(')', `,${op})`).replace('rgb', 'rgba').replace('rgba(fff', 'rgba(255,255,255');
-      if (s.color === '#fff') {
-        ctx.fillStyle = `rgba(255,255,255,${op})`;
-      } else if (s.color === '#a78bfa') {
-        ctx.fillStyle = `rgba(167,139,250,${op})`;
-      } else {
-        ctx.fillStyle = `rgba(125,211,252,${op})`;
-      }
+      if      (s.color === 'purple') ctx.fillStyle = `rgba(167,139,250,${op})`;
+      else if (s.color === 'blue')   ctx.fillStyle = `rgba(125,211,252,${op})`;
+      else                           ctx.fillStyle = `rgba(255,255,255,${op})`;
       ctx.fill();
     });
     requestAnimationFrame(draw);
@@ -78,25 +70,29 @@
 
 /* ── Mobile Sidebar Toggle ── */
 (function () {
-  const btn     = document.querySelector('.sidebar-toggle');
-  const sidebar = document.querySelector('.sidebar');
-  const overlay = document.querySelector('.sidebar-overlay');
-  if (!btn) return;
+  const btn     = document.getElementById('sidebarToggle');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  if (!btn || !sidebar) return;
 
   function openSidebar() {
     sidebar.classList.add('open');
-    overlay.classList.add('active');
+    if (overlay) overlay.classList.add('active');
     document.body.style.overflow = 'hidden';
+    btn.textContent = '✕';
   }
+
   function closeSidebar() {
     sidebar.classList.remove('open');
-    overlay.classList.remove('active');
+    if (overlay) overlay.classList.remove('active');
     document.body.style.overflow = '';
+    btn.textContent = '☰';
   }
 
   btn.addEventListener('click', () => {
     sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
   });
+
   overlay?.addEventListener('click', closeSidebar);
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSidebar(); });
 })();
@@ -105,13 +101,16 @@
 (function () {
   document.querySelectorAll('.nav-group-header').forEach(btn => {
     const sublist = btn.nextElementSibling;
+    if (!sublist) return;
+
     btn.addEventListener('click', () => {
-      const open = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', !open);
-      sublist.classList.toggle('open', !open);
+      const isOpen = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!isOpen));
+      sublist.classList.toggle('open', !isOpen);
     });
-    // auto-open if current page is inside
-    if (sublist && sublist.querySelector('.active')) {
+
+    // Auto-open si la página actual está dentro
+    if (sublist.querySelector('.active')) {
       btn.setAttribute('aria-expanded', 'true');
       sublist.classList.add('open');
       btn.classList.add('active-group');
@@ -119,9 +118,25 @@
   });
 })();
 
+/* ── Active nav highlight ── */
+(function () {
+  const path = location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-item[data-page], .main-nav a').forEach(link => {
+    const dataPg = link.getAttribute('data-page');
+    const href   = (link.getAttribute('href') || '').split('/').pop().split('#')[0];
+    if (dataPg && path.includes(dataPg)) {
+      link.classList.add('active');
+    } else if (!dataPg && href && href === path) {
+      link.classList.add('active');
+    }
+  });
+})();
+
 /* ── Copy IP ── */
 (function () {
   document.querySelectorAll('.ip-code[data-copy]').forEach(el => {
+    el.style.cursor = 'pointer';
+    el.title = 'Clic para copiar';
     el.addEventListener('click', () => {
       navigator.clipboard.writeText(el.dataset.copy || el.textContent.trim()).then(() => {
         const original = el.textContent;
@@ -133,26 +148,29 @@
   });
 })();
 
-/* ── Search (basic live filter) ── */
+/* ── Search (live filter) ── */
 (function () {
   const input    = document.querySelector('.search-input');
   const dropdown = document.querySelector('.search-dropdown');
   if (!input || !dropdown) return;
 
+  // Detectar si estamos en pages/ o en raíz
+  const inPages  = location.pathname.includes('/pages/');
+  const ROOT     = inPages ? '../' : '';
+
   const pages = [
-    { label: 'Normas del Servidor',      url: 'pages/normas.html' },
-    { label: 'Cómo Ingresar',            url: 'pages/como-ingresar.html' },
-    { label: 'Java Edition',             url: 'pages/java.html' },
-    { label: 'Bedrock Edition',          url: 'pages/bedrock.html' },
-    { label: 'Survival — Primeros Pasos',url: 'pages/survival-primeros-pasos.html' },
-    { label: 'Survival — Cómo Jugar',    url: 'pages/survival-como-jugar.html' },
-    { label: 'Survival — Vender',        url: 'pages/survival-vender.html' },
-    { label: 'Survival — Protecciones',  url: 'pages/survival-protecciones.html' },
-    { label: 'Survival — Subasta',       url: 'pages/survival-subasta.html' },
-    { label: 'Survival — Warps',         url: 'pages/survival-warps.html' },
-    { label: 'Survival — Tienda',        url: 'pages/survival-tienda.html' },
-    { label: 'Chat — Colores',           url: 'pages/chat-colores.html' },
-    { label: 'Lista de Mods',            url: 'pages/lista-mods.html' },
+    { label: 'Normas del Servidor',        url: ROOT + 'pages/normas.html' },
+    { label: 'Cómo Ingresar al Servidor',  url: ROOT + 'pages/como-ingresar.html' },
+    { label: 'Survival — Primeros Pasos',  url: ROOT + 'pages/survival-primeros-pasos.html' },
+    { label: 'Survival — Cómo Jugar',      url: ROOT + 'pages/survival-como-jugar.html' },
+    { label: 'Survival — Vender Ítems',    url: ROOT + 'pages/survival-vender.html' },
+    { label: 'Survival — Protecciones',    url: ROOT + 'pages/survival-protecciones.html' },
+    { label: 'Survival — Subasta',         url: ROOT + 'pages/survival-subasta.html' },
+    { label: 'Survival — Warps',           url: ROOT + 'pages/survival-warps.html' },
+    { label: 'Survival — La Tienda',       url: ROOT + 'pages/survival-tienda.html' },
+    { label: 'Votar por el Servidor',      url: ROOT + 'votar.html' },
+    { label: 'Redes Sociales',             url: ROOT + 'redes.html' },
+    { label: 'Jerarquía Staff',            url: ROOT + 'jerarquia.html' },
   ];
 
   input.addEventListener('input', () => {
@@ -160,19 +178,20 @@
     if (!q) { dropdown.innerHTML = ''; dropdown.hidden = true; return; }
     const results = pages.filter(p => p.label.toLowerCase().includes(q));
     if (!results.length) { dropdown.innerHTML = ''; dropdown.hidden = true; return; }
+
     dropdown.hidden = false;
     dropdown.innerHTML = results.slice(0, 6).map(p =>
-      `<li><a href="${p.url}" style="display:block;padding:10px 16px;font-size:13px;color:var(--text-secondary);transition:all .15s;letter-spacing:.02em" 
-              onmouseover="this.style.color='var(--neon-cyan)';this.style.background='rgba(0,245,255,.05)'"
-              onmouseout="this.style.color='var(--text-secondary)';this.style.background=''">${p.label}</a></li>`
+      `<li><a href="${p.url}">${p.label}</a></li>`
     ).join('');
   });
 
   document.addEventListener('click', e => {
-    if (!e.target.closest('.search-wrap')) { dropdown.hidden = true; }
+    if (!e.target.closest('.search-wrap')) dropdown.hidden = true;
   });
 
-  input.addEventListener('keydown', e => { if (e.key === 'Escape') { dropdown.hidden = true; input.blur(); } });
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { dropdown.hidden = true; input.blur(); }
+  });
 })();
 
 /* ── Keyboard shortcut Ctrl+K / Cmd+K ── */
@@ -182,12 +201,3 @@ document.addEventListener('keydown', e => {
     document.querySelector('.search-input')?.focus();
   }
 });
-
-/* ── Active nav highlight ── */
-(function () {
-  const path = location.pathname.split('/').pop();
-  document.querySelectorAll('.nav-item, .main-nav a').forEach(link => {
-    const href = link.getAttribute('href')?.split('/').pop();
-    if (href && href === path) link.classList.add('active');
-  });
-})();
