@@ -3,111 +3,308 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bienvenida — PlanetMC Wiki</title>
-  <meta name="description" content="Bienvenido a PlanetMC. Introducción a la wiki, versiones compatibles y cómo empezar.">
+  <!--
+  ╔══════════════════════════════════════════════════════════════╗
+  ║   _template.html  —  Plantilla base para páginas de la Wiki  ║
+  ║   PlanetMC Wiki                                              ║
+  ║                                                              ║
+  ║   INSTRUCCIONES PARA CREAR UNA NUEVA PÁGINA:                 ║
+  ║   1. Duplica este archivo con el nombre correcto.            ║
+  ║   2. Cambia el <title> por el nombre de tu página.           ║
+  ║   3. Cambia ROOT_PATH si la página está en una subcarpeta:   ║
+  ║        - pages/         → ROOT_PATH = '../'                  ║
+  ║        - pages/survival/→ ROOT_PATH = '../../'               ║
+  ║   4. Escribe todo tu contenido DENTRO de <div id="content-slot"> ║
+  ║   5. Registra la página en data/wiki-data.js                 ║
+  ║                                                              ║
+  ║   CLASES DE CONTENIDO DISPONIBLES:                           ║
+  ║   .page-hero          → Cabecera hero de la página           ║
+  ║   .breadcrumb-bar     → Barra de navegación de migas         ║
+  ║   .desc-box           → Caja de descripción con header       ║
+  ║   .tip-box            → Caja de consejo (azul/verde)         ║
+  ║   .warn-box           → Caja de advertencia (amarillo)       ║
+  ║   .info-card          → Tarjeta de información con filas     ║
+  ║   .wiki-table         → Tabla estilizada                     ║
+  ║   .cmd-grid           → Grid de comandos                     ║
+  ║   .faq-list           → Lista de preguntas frecuentes        ║
+  ║   .wiki-list          → Lista con viñetas estilizadas        ║
+  ║   .wiki-steps         → Lista numerada de pasos              ║
+  ║   .two-col            → Layout de dos columnas               ║
+  ║   .feature-grid       → Grid de características              ║
+  ║   .feature-card       → Tarjeta de característica            ║
+  ║   .item-grid          → Grid de items/chips                  ║
+  ║   .item-chip          → Chip de item                         ║
+  ║   .ip-chip.ip-copy    → IP copiable al clic                  ║
+  ║   .code-block         → Bloque de código                     ║
+  ╚══════════════════════════════════════════════════════════════╝
+  -->
+
+  <!-- ══ CAMBIA ESTE TÍTULO ══ -->
+  <title>Nombre de la Página — PlanetMC Wiki</title>
+
+  <meta name="description" content="Descripción breve de esta página para SEO.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="stylesheet" href="../assets/css/styles.css">
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+  <!--
+    AJUSTA LA RUTA DE styles.css SEGÚN LA PROFUNDIDAD:
+      pages/          → ../assets/css/styles.css
+      pages/survival/ → ../../assets/css/styles.css
+  -->
 </head>
 <body>
+
+<!-- ══════════════════════════════════════════════════════════════
+     TODO EL CONTENIDO VA AQUÍ DENTRO.
+     El layout (sidebar, navbar, footer) se inyecta automáticamente
+     por components/layout.js. No necesitas escribirlo tú.
+     ══════════════════════════════════════════════════════════════ -->
 <div id="content-slot">
 
-  <div class="page-hero">
-    <div class="page-hero-icon">🌌</div>
-    <h1>Bienvenido a PlanetMC</h1>
-    <p class="page-hero-desc">El servidor de Minecraft que lleva la experiencia al siguiente nivel. Explora, construye y compite con miles de jugadores.</p>
+  <!-- ─── MIGAJA DE PAN (Breadcrumb) ─────────────────────────────
+       Muestra en qué sección estás.
+       Cambia los textos por los de tu categoría y página.        -->
+  <div class="breadcrumb-bar">
+    <span class="bc-cat">🌐 CATEGORÍA</span>
+    <span class="bc-sep">›</span>
+    <span class="bc-page">📄 NOMBRE DE PÁGINA</span>
   </div>
 
+  <!-- ─── HERO DE PÁGINA ─────────────────────────────────────────
+       Cabecera principal de la página.
+       Cambia el emoji, el título y la descripción.               -->
+  <div class="page-hero" style="text-align:left; padding:28px 28px 24px;">
+    <div style="font-size:2.2rem; margin-bottom:10px;">🚀</div>
+    <h1 style="margin-bottom:8px;">Título de la Página</h1>
+    <p class="page-hero-desc" style="text-align:left; max-width:100%;">
+      Descripción breve de qué trata esta página y qué aprenderá el jugador.
+    </p>
+  </div>
+
+  <!-- ─── PÁRRAFO INTRODUCTORIO ──────────────────────────────────
+       Una o dos frases de introducción general.                  -->
+  <p>
+    Texto introductorio de la página. Explica brevemente el tema con contexto.
+    Puedes usar <strong>negritas</strong>, <em>cursivas</em> y <code>comandos</code>.
+  </p>
+
+  <!-- ══════════════════════════════════════════════════════════
+       EJEMPLOS DE TODOS LOS COMPONENTES DISPONIBLES
+       Borra los que no necesites. Copia y pega los que uses.
+       ══════════════════════════════════════════════════════════ -->
+
+
+  <!-- ─── SECCIÓN CON DESC-BOX ───────────────────────────────────
+       Caja con encabezado oscuro y cuerpo con lista o pasos.    -->
+  <h2 id="seccion-1">📋 Título de sección</h2>
   <div class="desc-box">
-    <div class="desc-box-header">📌 ¿Qué es PlanetMC?</div>
+    <div class="desc-box-header">📋 Encabezado de la caja</div>
     <div class="desc-box-body">
-      <p>PlanetMC es una red de servidores hispanohablante con modalidades variadas como <strong>Survival</strong>, eventos exclusivos y contenido en constante actualización. Esta wiki contiene todo lo que necesitas para empezar con buen pie.</p>
-      <p>Conocer y respetar las normas es clave para mantener un ambiente <strong>justo, amigable y seguro</strong> para todos los jugadores.</p>
-    </div>
-  </div>
+      <p>Descripción del contenido de esta caja.</p>
 
-  <h2 id="que-encontraras">📚 Qué encontrarás en esta Wiki</h2>
-  <div class="feature-grid">
-    <div class="feature-card">
-      <div class="feature-icon">📜</div>
-      <div class="feature-title">Normas del servidor</div>
-      <div class="feature-desc">Reglas claras que garantizan una experiencia justa para todos.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🚀</div>
-      <div class="feature-title">Cómo ingresar</div>
-      <div class="feature-desc">Guías para conectarte desde Java Edition o Bedrock.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">⚔️</div>
-      <div class="feature-title">Guías de Survival</div>
-      <div class="feature-desc">Todo sobre el modo más popular: economía, protecciones y más.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">💬</div>
-      <div class="feature-title">Comunidad</div>
-      <div class="feature-desc">Únete a Discord con eventos y sorteos frecuentes.</div>
-    </div>
-  </div>
-
-  <h2 id="como-usar">🗺️ Cómo usar esta Wiki</h2>
-  <div class="desc-box">
-    <div class="desc-box-header">📋 Navegación</div>
-    <div class="desc-box-body">
+      <!-- Lista con viñetas estilizadas -->
       <ul class="wiki-list">
-        <li>Usa el <strong>panel izquierdo</strong> para explorar las categorías disponibles.</li>
-        <li>Utiliza el <strong>buscador del sidebar</strong> para encontrar cualquier tema rápidamente.</li>
-        <li>Cada categoría tiene sus páginas listadas debajo de su nombre.</li>
-        <li>En móvil, usa el botón de <strong>menú (☰)</strong> para abrir la barra lateral.</li>
+        <li>Punto uno de la lista.</li>
+        <li>Punto dos con <strong>texto en negrita</strong>.</li>
+        <li>Punto tres con <code>comando</code> resaltado.</li>
       </ul>
     </div>
   </div>
 
+
+  <!-- ─── SECCIÓN CON PASOS NUMERADOS ────────────────────────────
+       Ideal para tutoriales paso a paso.                         -->
+  <h2 id="pasos">🔢 Pasos para hacer algo</h2>
+  <div class="desc-box">
+    <div class="desc-box-header">📋 Descripción</div>
+    <div class="desc-box-body">
+      <ol class="wiki-steps">
+        <li>Primer paso — explica qué hacer.</li>
+        <li>Segundo paso — con <strong>acción importante</strong>.</li>
+        <li>Tercer paso — usa <code>/comando</code> para continuar.</li>
+        <li>Cuarto paso — confirmación o resultado esperado.</li>
+      </ol>
+    </div>
+  </div>
+
+
+  <!-- ─── CAJA DE CONSEJO (TIP) ──────────────────────────────────
+       Para destacar información útil positiva.                   -->
   <div class="tip-box">
     <span class="tip-icon">💡</span>
-    <div><strong>Consejo para nuevos jugadores:</strong> Empieza por <a href="como-ingresar.html">Cómo Ingresar</a> y luego revisa los <a href="survival/primeros-pasos.html">Primeros Pasos en Survival</a>.</div>
+    <div><strong>Consejo:</strong> Aquí va un consejo útil para el jugador.</div>
   </div>
 
-  <h2 id="versiones">🎮 Versiones compatibles</h2>
-  <div class="two-col">
-    <div class="info-card">
-      <div class="info-card-row"><span class="info-label">Edición</span><span class="info-val" style="color:var(--java)">☕ Java Edition</span></div>
-      <div class="info-card-row"><span class="info-label">Versión</span><span class="info-val">1.21.x</span></div>
-      <div class="info-card-row"><span class="info-label">IP</span><span class="info-val ip-copy" data-ip="play.planetmc.net">play.planetmc.net 📋</span></div>
-      <div class="info-card-row"><span class="info-label">Plataformas</span><span class="info-val">Windows · Linux · macOS</span></div>
-    </div>
-    <div class="info-card">
-      <div class="info-card-row"><span class="info-label">Edición</span><span class="info-val" style="color:var(--bedrock)">📱 Bedrock Edition</span></div>
-      <div class="info-card-row"><span class="info-label">Versión</span><span class="info-val">1.21.x</span></div>
-      <div class="info-card-row"><span class="info-label">IP</span><span class="info-val ip-copy" data-ip="bedrock.planetmc.net">bedrock.planetmc.net 📋</span></div>
-      <div class="info-card-row"><span class="info-label">Plataformas</span><span class="info-val">Móvil · Xbox · Win10 · PS</span></div>
-    </div>
-  </div>
 
+  <!-- ─── CAJA DE ADVERTENCIA (WARN) ────────────────────────────
+       Para destacar información importante o peligrosa.          -->
   <div class="warn-box">
     <span class="warn-icon">⚠️</span>
-    <div><strong>Importante:</strong> Usa exactamente la versión <code>1.21.x</code>. Versiones diferentes pueden causar errores de conexión.</div>
+    <div><strong>Importante:</strong> Aquí va una advertencia crítica.</div>
   </div>
 
-  <h2 id="discord">💬 Únete a la comunidad</h2>
-  <div class="desc-box">
-    <div class="desc-box-header">📋 Discord oficial</div>
-    <div class="desc-box-body">
-      <p>El Discord de PlanetMC es el centro de la comunidad. Ahí encontrarás:</p>
-      <ul class="wiki-list">
-        <li>📢 Anuncios de actualizaciones y mantenimientos.</li>
-        <li>🎉 Eventos especiales y sorteos.</li>
-        <li>🎫 Sistema de tickets para soporte y apelaciones.</li>
-        <li>💬 Canales de chat por tema e idioma.</li>
-        <li>🤝 Posibilidad de conocer otros jugadores y formar equipos.</li>
-      </ul>
+
+  <!-- ─── TARJETA DE INFORMACIÓN (INFO CARD) ─────────────────────
+       Para mostrar datos en formato clave → valor.               -->
+  <h2 id="datos">📊 Datos importantes</h2>
+  <div class="info-card">
+    <div class="info-card-row">
+      <span class="info-label">Etiqueta</span>
+      <span class="info-val">Valor</span>
     </div>
+    <div class="info-card-row">
+      <span class="info-label">IP copiable</span>
+      <span class="info-val ip-copy" data-ip="play.planetmc.net">play.planetmc.net 📋</span>
+    </div>
+    <div class="info-card-row">
+      <span class="info-label">Versión</span>
+      <span class="info-val">1.21.x</span>
+    </div>
+  </div>
+
+
+  <!-- ─── GRID DE COMANDOS ───────────────────────────────────────
+       Para listar comandos con descripción breve.                -->
+  <h2 id="comandos">⌨️ Comandos disponibles</h2>
+  <div class="cmd-grid">
+    <div class="cmd-item"><code>/comando1</code><span>Descripción breve del comando</span></div>
+    <div class="cmd-item"><code>/comando2 [arg]</code><span>Descripción con argumento</span></div>
+    <div class="cmd-item"><code>/comando3</code><span>Otro comando útil</span></div>
+    <div class="cmd-item"><code>/comando4 [jugador]</code><span>Comando que afecta a un jugador</span></div>
+  </div>
+
+
+  <!-- ─── TABLA ──────────────────────────────────────────────────
+       Para mostrar datos comparativos o listas estructuradas.    -->
+  <h2 id="tabla">📊 Tabla de ejemplo</h2>
+  <div class="table-wrap">
+    <table class="wiki-table">
+      <thead>
+        <tr>
+          <th>Columna 1</th>
+          <th>Columna 2</th>
+          <th>Columna 3</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Fila 1, Col 1</td><td>Fila 1, Col 2</td><td>Fila 1, Col 3</td></tr>
+        <tr><td>Fila 2, Col 1</td><td>Fila 2, Col 2</td><td>Fila 2, Col 3</td></tr>
+        <tr><td>Fila 3, Col 1</td><td>Fila 3, Col 2</td><td>Fila 3, Col 3</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- ─── FAQ / ACORDEÓN ─────────────────────────────────────────
+       Para preguntas frecuentes con respuestas desplegables.     -->
+  <h2 id="faq">❓ Preguntas frecuentes</h2>
+  <div class="desc-box">
+    <div class="desc-box-header">❓ FAQ</div>
+    <div class="desc-box-body">
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>¿Pregunta número uno?</summary>
+          <p>Respuesta detallada a la primera pregunta.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Pregunta número dos?</summary>
+          <p>Respuesta detallada a la segunda pregunta.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Pregunta número tres?</summary>
+          <p>Respuesta detallada a la tercera pregunta.</p>
+        </details>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ─── DOS COLUMNAS ───────────────────────────────────────────
+       Para mostrar dos cajas lado a lado (responsive).           -->
+  <h2 id="dos-columnas">⚖️ Comparativa de dos opciones</h2>
+  <div class="two-col">
+    <div class="desc-box">
+      <div class="desc-box-header">✅ Opción A</div>
+      <div class="desc-box-body">
+        <ul class="wiki-list">
+          <li>Ventaja 1 de la opción A.</li>
+          <li>Ventaja 2 de la opción A.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="desc-box">
+      <div class="desc-box-header">❌ Opción B</div>
+      <div class="desc-box-body">
+        <ul class="wiki-list">
+          <li>Desventaja 1 de la opción B.</li>
+          <li>Desventaja 2 de la opción B.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ─── GRID DE CARACTERÍSTICAS ───────────────────────────────
+       Para mostrar características destacadas en tarjetas.       -->
+  <h2 id="caracteristicas">⭐ Características</h2>
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🎯</div>
+      <div class="feature-title">Característica 1</div>
+      <div class="feature-desc">Descripción corta de esta característica.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <div class="feature-title">Característica 2</div>
+      <div class="feature-desc">Descripción corta de esta característica.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔒</div>
+      <div class="feature-title">Característica 3</div>
+      <div class="feature-desc">Descripción corta de esta característica.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💰</div>
+      <div class="feature-title">Característica 4</div>
+      <div class="feature-desc">Descripción corta de esta característica.</div>
+    </div>
+  </div>
+
+
+  <!-- ─── GRID DE ITEMS / CHIPS ──────────────────────────────────
+       Para mostrar listas de items del inventario.               -->
+  <h2 id="items">🎒 Lista de items</h2>
+  <div class="item-grid">
+    <div class="item-chip">🗡️ Espada de hierro</div>
+    <div class="item-chip">⛏️ Pico de hierro</div>
+    <div class="item-chip">🍖 64x Carne cocida</div>
+    <div class="item-chip">💰 $500 PlanetCoins</div>
+  </div>
+
+
+  <!-- ─── BLOQUE DE CÓDIGO ───────────────────────────────────────
+       Para mostrar ejemplos de comandos con texto exacto.        -->
+  <h2 id="ejemplo">💻 Ejemplo de uso</h2>
+  <div class="code-block">
+    <code>/comando ejemplo con parámetros</code>
   </div>
 
 </div>
-<script>window.ROOT_PATH = '../';</script>
-<script src="../data/wiki-data.js"></script>
-<script src="../components/layout.js"></script>
-<script src="../assets/js/search.js"></script>
-<script src="../assets/js/main.js"></script>
+<!-- ═══ FIN del content-slot ═══════════════════════════════════ -->
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     SCRIPTS — No tocar salvo que cambies la profundidad de ruta.
+     ══════════════════════════════════════════════════════════════ -->
+
+<!--
+  AJUSTA ROOT_PATH SEGÚN LA PROFUNDIDAD DE TU ARCHIVO:
+    Archivo en pages/          → ROOT_PATH = '../'
+    Archivo en pages/survival/ → ROOT_PATH = '../../'
+-->
+<script>window.ROOT_PATH = '../../';</script>
+<script src="../../data/wiki-data.js"></script>
+<script src="../../components/layout.js"></script>
+<script src="../../assets/js/search.js"></script>
+<script src="../../assets/js/main.js"></script>
 </body>
 </html>
