@@ -1,2 +1,0 @@
-REEMPLAZA ESTE ARCHIVO con tu logo real (logo.png)
-Tamaño recomendado: 64x64px o 128x128px (PNG con fondo transparente)
