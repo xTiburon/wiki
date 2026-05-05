@@ -1,94 +1,310 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!--
-    🖊️ CAMBIA EL TÍTULO: reemplaza "Nombre de la Página" con el título real
+  ╔══════════════════════════════════════════════════════════════╗
+  ║   _template.html  —  Plantilla base para páginas de la Wiki  ║
+  ║   PlanetMC Wiki                                              ║
+  ║                                                              ║
+  ║   INSTRUCCIONES PARA CREAR UNA NUEVA PÁGINA:                 ║
+  ║   1. Duplica este archivo con el nombre correcto.            ║
+  ║   2. Cambia el <title> por el nombre de tu página.           ║
+  ║   3. Cambia ROOT_PATH si la página está en una subcarpeta:   ║
+  ║        - pages/         → ROOT_PATH = '../'                  ║
+  ║        - pages/survival/→ ROOT_PATH = '../../'               ║
+  ║   4. Escribe todo tu contenido DENTRO de <div id="content-slot"> ║
+  ║   5. Registra la página en data/wiki-data.js                 ║
+  ║                                                              ║
+  ║   CLASES DE CONTENIDO DISPONIBLES:                           ║
+  ║   .page-hero          → Cabecera hero de la página           ║
+  ║   .breadcrumb-bar     → Barra de navegación de migas         ║
+  ║   .desc-box           → Caja de descripción con header       ║
+  ║   .tip-box            → Caja de consejo (azul/verde)         ║
+  ║   .warn-box           → Caja de advertencia (amarillo)       ║
+  ║   .info-card          → Tarjeta de información con filas     ║
+  ║   .wiki-table         → Tabla estilizada                     ║
+  ║   .cmd-grid           → Grid de comandos                     ║
+  ║   .faq-list           → Lista de preguntas frecuentes        ║
+  ║   .wiki-list          → Lista con viñetas estilizadas        ║
+  ║   .wiki-steps         → Lista numerada de pasos              ║
+  ║   .two-col            → Layout de dos columnas               ║
+  ║   .feature-grid       → Grid de características              ║
+  ║   .feature-card       → Tarjeta de característica            ║
+  ║   .item-grid          → Grid de items/chips                  ║
+  ║   .item-chip          → Chip de item                         ║
+  ║   .ip-chip.ip-copy    → IP copiable al clic                  ║
+  ║   .code-block         → Bloque de código                     ║
+  ╚══════════════════════════════════════════════════════════════╝
   -->
+
+  <!-- ══ CAMBIA ESTE TÍTULO ══ -->
   <title>Nombre de la Página — PlanetMC Wiki</title>
-  <link rel="stylesheet" href="../assets/css/style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <meta name="description" content="Descripción breve de esta página para SEO.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+  <!--
+    AJUSTA LA RUTA DE styles.css SEGÚN LA PROFUNDIDAD:
+      pages/          → ../assets/css/styles.css
+      pages/survival/ → ../../assets/css/styles.css
+  -->
 </head>
 <body>
 
-<canvas id="starfield"></canvas>
+<!-- ══════════════════════════════════════════════════════════════
+     TODO EL CONTENIDO VA AQUÍ DENTRO.
+     El layout (sidebar, navbar, footer) se inyecta automáticamente
+     por components/layout.js. No necesitas escribirlo tú.
+     ══════════════════════════════════════════════════════════════ -->
+<div id="content-slot">
 
-<!-- Los componentes se cargan automáticamente por main.js — NO los edites aquí -->
-<div id="wiki-header"></div>
+  <!-- ─── MIGAJA DE PAN (Breadcrumb) ─────────────────────────────
+       Muestra en qué sección estás.
+       Cambia los textos por los de tu categoría y página.        -->
+  <div class="breadcrumb-bar">
+    <span class="bc-cat">🌐 CATEGORÍA</span>
+    <span class="bc-sep">›</span>
+    <span class="bc-page">📄 NOMBRE DE PÁGINA</span>
+  </div>
 
-<div class="layout">
+  <!-- ─── HERO DE PÁGINA ─────────────────────────────────────────
+       Cabecera principal de la página.
+       Cambia el emoji, el título y la descripción.               -->
+  <div class="page-hero" style="text-align:left; padding:28px 28px 24px;">
+    <div style="font-size:2.2rem; margin-bottom:10px;">🚀</div>
+    <h1 style="margin-bottom:8px;">Título de la Página</h1>
+    <p class="page-hero-desc" style="text-align:left; max-width:100%;">
+      Descripción breve de qué trata esta página y qué aprenderá el jugador.
+    </p>
+  </div>
 
-  <div id="wiki-sidebar"></div>
+  <!-- ─── PÁRRAFO INTRODUCTORIO ──────────────────────────────────
+       Una o dos frases de introducción general.                  -->
+  <p>
+    Texto introductorio de la página. Explica brevemente el tema con contexto.
+    Puedes usar <strong>negritas</strong>, <em>cursivas</em> y <code>comandos</code>.
+  </p>
 
-  <!-- ═══════════════════════════════════════════════
-       CONTENIDO DE LA PÁGINA  ← Solo edita esta parte
-  ════════════════════════════════════════════════════ -->
-  <main class="main-content">
+  <!-- ══════════════════════════════════════════════════════════
+       EJEMPLOS DE TODOS LOS COMPONENTES DISPONIBLES
+       Borra los que no necesites. Copia y pega los que uses.
+       ══════════════════════════════════════════════════════════ -->
 
-    <!-- ENCABEZADO DE LA PÁGINA -->
-    <div class="page-header">
-      <div class="breadcrumb">
-        <!--
-          🖊️ Ajusta el breadcrumb según la sección:
-          Inicio › Información › Esta Página
-          Inicio › Survival › Esta Página
-          Inicio › Tutoriales › Esta Página
-        -->
-        <a href="../index.html">Inicio</a> › <a href="#">Sección</a> › <span>Nombre de la Página</span>
-      </div>
-      <!-- 🖊️ Cambia el emoji y el título -->
-      <h1>🗂️ Nombre de la Página</h1>
-    </div>
 
-    <div class="page-content">
+  <!-- ─── SECCIÓN CON DESC-BOX ───────────────────────────────────
+       Caja con encabezado oscuro y cuerpo con lista o pasos.    -->
+  <h2 id="seccion-1">📋 Título de sección</h2>
+  <div class="desc-box">
+    <div class="desc-box-header">📋 Encabezado de la caja</div>
+    <div class="desc-box-body">
+      <p>Descripción del contenido de esta caja.</p>
 
-      <!--
-        ═══════════════════════════════════════════════════════
-        BLOQUES DISPONIBLES — usa los que necesites:
-        ═══════════════════════════════════════════════════════
-
-        INFO (azul):    <div class="info-box">Texto informativo.</div>
-        TIP (verde):    <div class="tip-box">Consejo útil.</div>
-        ADVERTENCIA:    <div class="warn-box">Texto importante.</div>
-        CÓDIGO:         <pre><code>/comando ejemplo</code></pre>
-
-        ═══════════════════════════════════════════════════════
-      -->
-
-      <!-- Encabezado de sección -->
-      <h2>Título de sección</h2>
-      <p>Texto explicativo de esta sección...</p>
-
-      <!-- Lista de ítems -->
-      <ul>
-        <li>Ítem 1</li>
-        <li>Ítem 2</li>
-        <li>Ítem 3</li>
+      <!-- Lista con viñetas estilizadas -->
+      <ul class="wiki-list">
+        <li>Punto uno de la lista.</li>
+        <li>Punto dos con <strong>texto en negrita</strong>.</li>
+        <li>Punto tres con <code>comando</code> resaltado.</li>
       </ul>
+    </div>
+  </div>
 
-      <!-- Ejemplo de tip box -->
-      <div class="tip-box">
-        💡 Aquí va un consejo útil para el jugador.
+
+  <!-- ─── SECCIÓN CON PASOS NUMERADOS ────────────────────────────
+       Ideal para tutoriales paso a paso.                         -->
+  <h2 id="pasos">🔢 Pasos para hacer algo</h2>
+  <div class="desc-box">
+    <div class="desc-box-header">📋 Descripción</div>
+    <div class="desc-box-body">
+      <ol class="wiki-steps">
+        <li>Primer paso — explica qué hacer.</li>
+        <li>Segundo paso — con <strong>acción importante</strong>.</li>
+        <li>Tercer paso — usa <code>/comando</code> para continuar.</li>
+        <li>Cuarto paso — confirmación o resultado esperado.</li>
+      </ol>
+    </div>
+  </div>
+
+
+  <!-- ─── CAJA DE CONSEJO (TIP) ──────────────────────────────────
+       Para destacar información útil positiva.                   -->
+  <div class="tip-box">
+    <span class="tip-icon">💡</span>
+    <div><strong>Consejo:</strong> Aquí va un consejo útil para el jugador.</div>
+  </div>
+
+
+  <!-- ─── CAJA DE ADVERTENCIA (WARN) ────────────────────────────
+       Para destacar información importante o peligrosa.          -->
+  <div class="warn-box">
+    <span class="warn-icon">⚠️</span>
+    <div><strong>Importante:</strong> Aquí va una advertencia crítica.</div>
+  </div>
+
+
+  <!-- ─── TARJETA DE INFORMACIÓN (INFO CARD) ─────────────────────
+       Para mostrar datos en formato clave → valor.               -->
+  <h2 id="datos">📊 Datos importantes</h2>
+  <div class="info-card">
+    <div class="info-card-row">
+      <span class="info-label">Etiqueta</span>
+      <span class="info-val">Valor</span>
+    </div>
+    <div class="info-card-row">
+      <span class="info-label">IP copiable</span>
+      <span class="info-val ip-copy" data-ip="play.planetmc.net">play.planetmc.net 📋</span>
+    </div>
+    <div class="info-card-row">
+      <span class="info-label">Versión</span>
+      <span class="info-val">1.21.x</span>
+    </div>
+  </div>
+
+
+  <!-- ─── GRID DE COMANDOS ───────────────────────────────────────
+       Para listar comandos con descripción breve.                -->
+  <h2 id="comandos">⌨️ Comandos disponibles</h2>
+  <div class="cmd-grid">
+    <div class="cmd-item"><code>/comando1</code><span>Descripción breve del comando</span></div>
+    <div class="cmd-item"><code>/comando2 [arg]</code><span>Descripción con argumento</span></div>
+    <div class="cmd-item"><code>/comando3</code><span>Otro comando útil</span></div>
+    <div class="cmd-item"><code>/comando4 [jugador]</code><span>Comando que afecta a un jugador</span></div>
+  </div>
+
+
+  <!-- ─── TABLA ──────────────────────────────────────────────────
+       Para mostrar datos comparativos o listas estructuradas.    -->
+  <h2 id="tabla">📊 Tabla de ejemplo</h2>
+  <div class="table-wrap">
+    <table class="wiki-table">
+      <thead>
+        <tr>
+          <th>Columna 1</th>
+          <th>Columna 2</th>
+          <th>Columna 3</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Fila 1, Col 1</td><td>Fila 1, Col 2</td><td>Fila 1, Col 3</td></tr>
+        <tr><td>Fila 2, Col 1</td><td>Fila 2, Col 2</td><td>Fila 2, Col 3</td></tr>
+        <tr><td>Fila 3, Col 1</td><td>Fila 3, Col 2</td><td>Fila 3, Col 3</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- ─── FAQ / ACORDEÓN ─────────────────────────────────────────
+       Para preguntas frecuentes con respuestas desplegables.     -->
+  <h2 id="faq">❓ Preguntas frecuentes</h2>
+  <div class="desc-box">
+    <div class="desc-box-header">❓ FAQ</div>
+    <div class="desc-box-body">
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>¿Pregunta número uno?</summary>
+          <p>Respuesta detallada a la primera pregunta.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Pregunta número dos?</summary>
+          <p>Respuesta detallada a la segunda pregunta.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Pregunta número tres?</summary>
+          <p>Respuesta detallada a la tercera pregunta.</p>
+        </details>
       </div>
+    </div>
+  </div>
 
-      <!-- Ejemplo de advertencia -->
-      <div class="warn-box">
-        ⚠️ Aquí va una advertencia importante.
+
+  <!-- ─── DOS COLUMNAS ───────────────────────────────────────────
+       Para mostrar dos cajas lado a lado (responsive).           -->
+  <h2 id="dos-columnas">⚖️ Comparativa de dos opciones</h2>
+  <div class="two-col">
+    <div class="desc-box">
+      <div class="desc-box-header">✅ Opción A</div>
+      <div class="desc-box-body">
+        <ul class="wiki-list">
+          <li>Ventaja 1 de la opción A.</li>
+          <li>Ventaja 2 de la opción A.</li>
+        </ul>
       </div>
+    </div>
+    <div class="desc-box">
+      <div class="desc-box-header">❌ Opción B</div>
+      <div class="desc-box-body">
+        <ul class="wiki-list">
+          <li>Desventaja 1 de la opción B.</li>
+          <li>Desventaja 2 de la opción B.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
 
-      <!-- Ejemplo de bloque de código / comandos -->
-      <pre><code>/comando ejemplo     → Descripción del comando
-/otro-comando        → Descripción</code></pre>
 
-    </div><!-- /page-content -->
-  </main>
+  <!-- ─── GRID DE CARACTERÍSTICAS ───────────────────────────────
+       Para mostrar características destacadas en tarjetas.       -->
+  <h2 id="caracteristicas">⭐ Características</h2>
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🎯</div>
+      <div class="feature-title">Característica 1</div>
+      <div class="feature-desc">Descripción corta de esta característica.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <div class="feature-title">Característica 2</div>
+      <div class="feature-desc">Descripción corta de esta característica.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔒</div>
+      <div class="feature-title">Característica 3</div>
+      <div class="feature-desc">Descripción corta de esta característica.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💰</div>
+      <div class="feature-title">Característica 4</div>
+      <div class="feature-desc">Descripción corta de esta característica.</div>
+    </div>
+  </div>
+
+
+  <!-- ─── GRID DE ITEMS / CHIPS ──────────────────────────────────
+       Para mostrar listas de items del inventario.               -->
+  <h2 id="items">🎒 Lista de items</h2>
+  <div class="item-grid">
+    <div class="item-chip">🗡️ Espada de hierro</div>
+    <div class="item-chip">⛏️ Pico de hierro</div>
+    <div class="item-chip">🍖 64x Carne cocida</div>
+    <div class="item-chip">💰 $500 PlanetCoins</div>
+  </div>
+
+
+  <!-- ─── BLOQUE DE CÓDIGO ───────────────────────────────────────
+       Para mostrar ejemplos de comandos con texto exacto.        -->
+  <h2 id="ejemplo">💻 Ejemplo de uso</h2>
+  <div class="code-block">
+    <code>/comando ejemplo con parámetros</code>
+  </div>
 
 </div>
+<!-- ═══ FIN del content-slot ═══════════════════════════════════ -->
 
-<div id="wiki-footer"></div>
 
-<script src="../assets/js/main.js"></script>
+<!-- ══════════════════════════════════════════════════════════════
+     SCRIPTS — No tocar salvo que cambies la profundidad de ruta.
+     ══════════════════════════════════════════════════════════════ -->
+
+<!--
+  AJUSTA ROOT_PATH SEGÚN LA PROFUNDIDAD DE TU ARCHIVO:
+    Archivo en pages/          → ROOT_PATH = '../'
+    Archivo en pages/survival/ → ROOT_PATH = '../../'
+-->
+<script>window.ROOT_PATH = '../../';</script>
+<script src="../../data/wiki-data.js"></script>
+<script src="../../components/layout.js"></script>
+<script src="../../assets/js/search.js"></script>
+<script src="../../assets/js/main.js"></script>
 </body>
 </html>
