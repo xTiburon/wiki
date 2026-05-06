@@ -18,7 +18,7 @@ var WIKI_DATA = {
     javaIP:      'planetmc.net',
     bedrockIP:   'planetmc.net',
     bedrockPort: '19132',
-    discordURL:  'https://discord.gg/planetmc',
+    discordURL:  'https://discord.com/invite/HvcPfgXVHf',
     shopURL:     'https://planet.tebex.io',
     mainURL:     'https://planetmc.net',
     version:     '1.21.x',
