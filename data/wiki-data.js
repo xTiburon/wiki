@@ -19,7 +19,7 @@ var WIKI_DATA = {
     bedrockIP:   'play.planetmc.net',
     bedrockPort: '19132',
     discordURL:  'https://discord.gg/planetmc',
-    shopURL:     'https://tienda.planetmc.net',
+    shopURL:     'https://planet.tebex.io',
     mainURL:     'https://planetmc.net',
     version:     '1.21.x',
   },
@@ -28,7 +28,7 @@ var WIKI_DATA = {
   navLinks: [
     { name: 'Inicio',  url: 'https://planetmc.net',        external: true  },
     { name: 'Wiki',    url: 'index.html',                  external: false },
-    { name: 'Tienda',  url: 'https://tienda.planetmc.net', external: true  },
+    { name: 'Tienda',  url: 'https://planet.tebex.io', external: true  },
     { name: 'Discord', url: 'https://discord.gg/planetmc', external: true, icon: 'discord' },
   ],
 
