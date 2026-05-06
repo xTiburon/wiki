@@ -864,3 +864,38 @@ code {
   .wiki-index-hero { padding: 32px 16px; }
   #wiki-header { padding: 0 16px; }
 }
+
+/* ════════════════════════════════════════════════════════
+   CAMBIOS PERSONALIZADOS — PlanetMC Wiki
+   ════════════════════════════════════════════════════════ */
+
+/* ── Botón de Tienda en el navbar ───────────────────────
+   Mismo molde estructural que .nav-link-discord,
+   pero con paleta naranja/ámbar llamativa.           */
+.nav-link-shop {
+  color: #fbbf24;
+  border-color: rgba(251,191,36,.35);
+  background: rgba(251,191,36,.1);
+}
+.nav-link-shop:hover {
+  color: #fff;
+  border-color: rgba(251,191,36,.75);
+  background: rgba(251,191,36,.22);
+  box-shadow: 0 0 14px rgba(251,191,36,.35);
+}
+.nav-link-shop svg { stroke: currentColor; }
+
+/* ── Logo imagen en el footer ───────────────────────────
+   Reemplaza el antiguo .footer-logo-planet (círculo). */
+.footer-logo-img {
+  height: 36px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+  filter: drop-shadow(0 0 8px rgba(0,229,255,.25));
+  transition: filter .22s ease;
+}
+.footer-logo-img:hover {
+  filter: drop-shadow(0 0 14px rgba(0,229,255,.5));
+}
+.footer-logo { margin-bottom: 10px; }
