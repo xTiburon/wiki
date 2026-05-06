@@ -15,8 +15,8 @@ var WIKI_DATA = {
     name:        'PlanetMC',
     wikiTitle:   'Wiki Oficial',
     tagline:     'Tu guía completa del servidor',
-    javaIP:      'play.planetmc.net',
-    bedrockIP:   'play.planetmc.net',
+    javaIP:      'planetmc.net',
+    bedrockIP:   'planetmc.net',
     bedrockPort: '19132',
     discordURL:  'https://discord.gg/planetmc',
     shopURL:     'https://planet.tebex.io',
@@ -124,11 +124,11 @@ var WIKI_DATA = {
             <div class="info-card">
               <div class="info-card-row">
                 <span class="info-label">IP Java</span>
-                <span class="info-val ip-copy" data-ip="play.planetmc.net">play.planetmc.net 📋</span>
+                <span class="info-val ip-copy" data-ip="planetmc.net">planetmc.net 📋</span>
               </div>
               <div class="info-card-row">
                 <span class="info-label">IP Bedrock</span>
-                <span class="info-val ip-copy" data-ip="play.planetmc.net">play.planetmc.net 📋</span>
+                <span class="info-val ip-copy" data-ip="planetmc.net">planetmc.net 📋</span>
               </div>
               <div class="info-card-row">
                 <span class="info-label">Puerto Bedrock</span>
@@ -359,7 +359,7 @@ var WIKI_DATA = {
             <div class="info-card">
               <div class="info-card-row">
                 <span class="info-label">🌐 IP del servidor</span>
-                <span class="info-val ip-copy" data-ip="play.planetmc.net">play.planetmc.net 📋</span>
+                <span class="info-val ip-copy" data-ip="planetmc.net">planetmc.net 📋</span>
               </div>
               <div class="info-card-row">
                 <span class="info-label">🎮 Versión</span>
@@ -385,7 +385,7 @@ var WIKI_DATA = {
                   <li>Haz clic en <strong>"Jugar"</strong>.</li>
                   <li>En el menú principal, haz clic en <strong>"Multijugador"</strong>.</li>
                   <li>Haz clic en <strong>"Añadir servidor"</strong>.</li>
-                  <li>Escribe en Dirección: <code>play.planetmc.net</code></li>
+                  <li>Escribe en Dirección: <code>planetmc.net</code></li>
                   <li>Haz clic en <strong>"Listo"</strong> y luego en <strong>"Unirse al servidor"</strong>.</li>
                   <li>¡Ya estás dentro! Serás enviado al <strong>Spawn</strong>.</li>
                 </ol>
@@ -404,7 +404,7 @@ var WIKI_DATA = {
                 <div class="faq-list">
                   <details class="faq-item">
                     <summary>Me sale "Failed to connect to the server"</summary>
-                    <p>Verifica que la IP sea exactamente <code>play.planetmc.net</code>. Revisa tu internet. Si persiste, consulta <strong>#estado-servidor</strong> en Discord.</p>
+                    <p>Verifica que la IP sea exactamente <code>planetmc.net</code>. Revisa tu internet. Si persiste, consulta <strong>#estado-servidor</strong> en Discord.</p>
                   </details>
                   <details class="faq-item">
                     <summary>Me sale "Outdated client"</summary>
@@ -462,7 +462,7 @@ var WIKI_DATA = {
             <div class="info-card">
               <div class="info-card-row">
                 <span class="info-label">🌐 IP del servidor</span>
-                <span class="info-val ip-copy" data-ip="play.planetmc.net">play.planetmc.net 📋</span>
+                <span class="info-val ip-copy" data-ip="planetmc.net">planetmc.net 📋</span>
               </div>
               <div class="info-card-row">
                 <span class="info-label">🔌 Puerto</span>
@@ -482,7 +482,7 @@ var WIKI_DATA = {
                   <li>Abre <strong>Minecraft</strong> en tu dispositivo.</li>
                   <li>Toca <strong>"Jugar"</strong> → pestaña <strong>"Servidores"</strong>.</li>
                   <li>Desplázate hacia abajo y toca <strong>"Añadir servidor"</strong>.</li>
-                  <li>Rellena: Dirección <code>play.planetmc.net</code> · Puerto <code>19132</code></li>
+                  <li>Rellena: Dirección <code>planetmc.net</code> · Puerto <code>19132</code></li>
                   <li>Toca <strong>"Guardar"</strong> y luego <strong>"Conectar"</strong>.</li>
                   <li>¡Listo! Estarás en el <strong>Spawn</strong>.</li>
                 </ol>
