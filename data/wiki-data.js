@@ -74,7 +74,7 @@ var WIKI_DATA = {
               <span class="bc-page">🏠 Bienvenida</span>
             </div>
             <div class="page-hero" style="text-align:center;">
-              <img src="logo.png" alt="PlanetMC Logo" style="width:120px;margin-bottom:15px;display:block;margin-left:auto;margin-right:auto;">
+              <img src="../logo.png" alt="PlanetMC Logo" style="width:400px;max-width:90%;margin-bottom:20px;display:block;margin-left:auto;margin-right:auto;filter:drop-shadow(0 0 24px rgba(0,229,255,.3));">
               <div style="font-size:2.2rem;">🌌</div>
               <h1>Bienvenido a la Wiki de PlanetMC</h1>
               <p class="page-hero-desc">Tu punto de inicio para descubrir todo lo que ofrece el servidor.</p>
