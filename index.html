@@ -3,68 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PlanetMC Wiki — Inicio</title>
-  <meta name="description" content="Wiki oficial de PlanetMC. Guías, normas, comandos y todo lo que necesitas saber.">
+  <title>PlanetMC Wiki — Bienvenido</title>
+  <meta name="description" content="Wiki oficial de PlanetMC. Tu punto de inicio para descubrir todo lo que ofrece el servidor: guías, normas, comandos y mucho más.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
 
-<div id="content-slot">
-
-  <div class="wiki-index-hero">
-    <div class="wiki-planet"></div>
-    <h1>Bienvenido a la Wiki</h1>
-    <p>Tu guía completa para PlanetMC. Encuentra información sobre modos de juego, normas, comandos y mucho más.</p>
-    <div class="ip-hero-row">
-      <div class="ip-hero-chip java ip-copy" data-ip="play.planetmc.net">
-        ☕ Java: <strong>planetmc.net</strong> <span class="copy-hint">📋</span>
-      </div>
-      <div class="ip-hero-chip bedrock ip-copy" data-ip="bedrock.planetmc.net">
-        📱 Bedrock: <strong>planetmc.net</strong> <span class="copy-hint">📋</span>
-      </div>
-    </div>
-  </div>
-
-  <h2 style="font-family:var(--head);font-size:1rem;letter-spacing:2px;color:var(--accent4);margin-bottom:20px;">
-    📚 CATEGORÍAS
-  </h2>
-  <div class="wiki-categories-grid" id="wiki-cats-grid">
-    <!-- Generado por main.js desde wiki-data.js -->
-  </div>
-
-</div>
+<div id="content-slot"></div>
 
 <script>window.ROOT_PATH = './';</script>
 <script src="data/wiki-data.js"></script>
 <script src="components/layout.js"></script>
 <script src="assets/js/search.js"></script>
 <script src="assets/js/main.js"></script>
-<script>
-  // Generar tarjetas de categorías desde WIKI_DATA
-  document.addEventListener('DOMContentLoaded', () => {
-    const grid = document.getElementById('wiki-cats-grid');
-    if (!grid || !window.WIKI_DATA) return;
-    WIKI_DATA.categories.forEach(cat => {
-      const card = document.createElement('div');
-      card.className = 'wiki-cat-card';
-      card.style.setProperty('--cat-color', cat.color);
-      const pagesHTML = cat.pages.map(p =>
-        `<a href="${p.path}" class="wiki-cat-page-link">${p.name}</a>`
-      ).join('');
-      card.innerHTML = `
-        <div class="wiki-cat-header">
-          <div class="wiki-cat-icon">${cat.icon}</div>
-          <div>
-            <div class="wiki-cat-title">${cat.name}</div>
-            <div class="wiki-cat-count">${cat.pages.length} página${cat.pages.length !== 1 ? 's' : ''}</div>
-          </div>
-        </div>
-        <div class="wiki-cat-pages">${pagesHTML}</div>
-      `;
-      grid.appendChild(card);
-    });
-  });
-</script>
+
 </body>
 </html>
