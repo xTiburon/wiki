@@ -419,19 +419,15 @@ const WIKI_DATA = {
               <div class="item-chip">⛏️ Pico de hierro</div>
               <div class="item-chip">🪓 Hacha de hierro</div>
               <div class="item-chip">🍖 64x Carne cocida</div>
-              <div class="item-chip">💎 $500 PlanetCoins</div>
-              <div class="item-chip">📦 Cofre de madera</div>
             </div>
 
             <h2 id="primeros-30">⏱️ Qué Hacer en los Primeros 30 Minutos</h2>
             <ol class="wiki-steps">
-              <li>Usa <code>/kit novato</code> para recibir tu kit de inicio.</li>
-              <li>Viaja al Survival con <code>/warp survival</code>.</li>
-              <li>Aléjate del spawn (mínimo 500 bloques) para encontrar terreno libre.</li>
+              <li>Usa <code>/kit inicio</code> para recibir tu kit de inicio.</li>
+              <li>Viaja al Survival con <code>/rtp</code>.</li>
               <li>Construye una base temporal para tu primera noche.</li>
-              <li>Protege tu terreno con <code>/claim</code> (consulta la guía de protecciones).</li>
+              <li>Protege tu terreno con <code>/protecciones</code> (consulta la guía de protecciones).</li>
               <li>Establece tu hogar con <code>/sethome</code>.</li>
-              <li>Empieza a farmear materiales básicos y a ganar PlanetCoins.</li>
             </ol>
 
             <h2 id="comandos">⌨️ Comandos Esenciales</h2>
