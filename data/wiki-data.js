@@ -17,15 +17,14 @@ const WIKI_DATA = {
     discordURL: 'https://discord.gg/HvcPfgXVHf',
     shopURL:    'https://planet.tebex.io/',
     mainURL:    'https://planetmc.net',
-    version:    '1.21.x',
   },
 
   /* ── Navbar superior ──────────────────── */
   navLinks: [
     { name: 'Inicio',  url: 'https://planetmc.net',        external: true  },
     { name: 'Wiki',    url: 'index.html',                  external: false },
-    { name: 'Tienda',  url: 'https://tienda.planetmc.net', external: true  },
-    { name: 'Discord', url: 'https://discord.gg/planetmc', external: true, icon: 'discord' },
+    { name: 'Tienda',  url: 'https://planet.tebex.io/', external: true  },
+    { name: 'Discord', url: 'https://discord.gg/HvcPfgXVHf', external: true, icon: 'discord' },
   ],
 
   /* ══════════════════════════════════════════
