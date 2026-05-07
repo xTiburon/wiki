@@ -91,11 +91,11 @@ const WIKI_DATA = {
         <div class="info-card">
           <div class="info-card-row">
             <span class="info-label">IP Java</span>
-            <span class="info-val ip-copy" data-ip="play.planetmc.net">play.planetmc.net <span class="copy-hint">📋</span></span>
+            <span class="info-val ip-copy" data-ip="planetmc.net">planetmc.net <span class="copy-hint">📋</span></span>
           </div>
           <div class="info-card-row">
             <span class="info-label">IP Bedrock</span>
-            <span class="info-val ip-copy" data-ip="bedrock.planetmc.net">bedrock.planetmc.net <span class="copy-hint">📋</span></span>
+            <span class="info-val ip-copy" data-ip="planetmc.net">planetmc.net <span class="copy-hint">📋</span></span>
           </div>
           <div class="info-card-row">
             <span class="info-label">Puerto Bedrock</span>
@@ -256,7 +256,7 @@ const WIKI_DATA = {
             <div class="info-card">
               <div class="info-card-row">
                 <span class="info-label">IP del servidor</span>
-                <span class="info-val ip-copy" data-ip="play.planetmc.net">play.planetmc.net <span class="copy-hint">📋</span></span>
+                <span class="info-val ip-copy" data-ip="planetmc.net">planetmc.net <span class="copy-hint">📋</span></span>
               </div>
               <div class="info-card-row">
                 <span class="info-label">Versión</span>
@@ -274,7 +274,7 @@ const WIKI_DATA = {
               <li>Haz clic en <strong>"Jugar"</strong>.</li>
               <li>En el menú principal, haz clic en <strong>"Multijugador"</strong>.</li>
               <li>Haz clic en <strong>"Añadir servidor"</strong>.</li>
-              <li>En el campo "Dirección del servidor" escribe: <code>play.planetmc.net</code></li>
+              <li>En el campo "Dirección del servidor" escribe: <code>planetmc.net</code></li>
               <li>Haz clic en <strong>"Listo"</strong> y luego en <strong>"Unirse al servidor"</strong>.</li>
               <li>¡Ya estás dentro! Serás enviado al <strong>Spawn</strong>.</li>
             </ol>
@@ -288,7 +288,7 @@ const WIKI_DATA = {
             <div class="faq-list">
               <details class="faq-item">
                 <summary>Me sale "Failed to connect to the server"</summary>
-                <p>Verifica que la IP sea exactamente <code>play.planetmc.net</code>. Comprueba tu conexión a internet. Si el problema persiste, revisa el canal <strong>#estado-servidor</strong> en Discord.</p>
+                <p>Verifica que la IP sea exactamente <code>planetmc.net</code>. Comprueba tu conexión a internet. Si el problema persiste, revisa el canal <strong>#estado-servidor</strong> en Discord.</p>
               </details>
               <details class="faq-item">
                 <summary>Me sale "Outdated client"</summary>
@@ -325,7 +325,7 @@ const WIKI_DATA = {
             <div class="info-card">
               <div class="info-card-row">
                 <span class="info-label">IP del servidor</span>
-                <span class="info-val ip-copy" data-ip="bedrock.planetmc.net">bedrock.planetmc.net <span class="copy-hint">📋</span></span>
+                <span class="info-val ip-copy" data-ip="planetmc.net">planetmc.net <span class="copy-hint">📋</span></span>
               </div>
               <div class="info-card-row">
                 <span class="info-label">Puerto</span>
