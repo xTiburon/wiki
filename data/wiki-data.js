@@ -34,6 +34,117 @@ const WIKI_DATA = {
      ══════════════════════════════════════════ */
   standalonePages: [
     {
+      id:          'bienvenida',
+      name:        'Bienvenida',
+      icon:        '🏠',
+      path:        'index.html',
+      description: 'Tu punto de inicio para descubrir todo lo que ofrece el servidor PlanetMC.',
+      keywords:    ['bienvenida','inicio','introduccion','empezar','nuevo','jugador','survival','planetmc'],
+      content: `
+        <div class="page-hero" style="text-align:center;">
+          <img src="logo.png" alt="PlanetMC Logo" style="width:380px;max-width:90%;margin-bottom:20px;display:block;margin-left:auto;margin-right:auto;filter:drop-shadow(0 0 24px rgba(0,229,255,.3));">
+          <h1>Bienvenido a la Wiki de PlanetMC</h1>
+          <p class="page-hero-desc">Tu punto de inicio para descubrir todo lo que ofrece el servidor.</p>
+        </div>
+
+        <p>Nos alegra tenerte aquí. En esta wiki encontrarás toda la información necesaria
+        para comenzar tu aventura: desde <strong>guías básicas</strong> hasta sistemas más avanzados.</p>
+        <p>PlanetMC es una comunidad enfocada en ofrecer una experiencia <strong>survival divertida,
+        estable y en constante evolución</strong>.</p>
+
+        <h2 id="que-encontraras">🚀 ¿Qué encontrarás aquí?</h2>
+        <div class="desc-box">
+          <div class="desc-box-header">📚 Contenido de la Wiki</div>
+          <div class="desc-box-body">
+            <ul class="wiki-list">
+              <li>Guías paso a paso para comenzar desde cero.</li>
+              <li>Explicación de sistemas como economía y protecciones.</li>
+              <li>Listado de comandos importantes.</li>
+              <li>Consejos y trucos para mejorar tu experiencia.</li>
+            </ul>
+          </div>
+        </div>
+
+        <h2 id="como-empezar">🧭 ¿Cómo empezar?</h2>
+        <div class="desc-box">
+          <div class="desc-box-header">📋 Primeros pasos recomendados</div>
+          <div class="desc-box-body">
+            <ol class="wiki-steps">
+              <li>Lee las <strong>normas del servidor</strong> para evitar sanciones.</li>
+              <li>Ingresa al servidor usando la IP.</li>
+              <li>Explora el spawn y familiarízate con el entorno.</li>
+              <li>Consulta la sección de <strong>Primeros Pasos</strong>.</li>
+              <li>¡Empieza tu aventura y construye tu historia!</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="alert alert-info">
+          <span class="alert-icon">💡</span>
+          <div><strong>Consejo:</strong> Revisa siempre la wiki antes de preguntar en Discord. Muchas respuestas ya están aquí.</div>
+        </div>
+        <div class="alert alert-warn">
+          <span class="alert-icon">⚠️</span>
+          <div><strong>Importante:</strong> El desconocimiento de las normas no evita sanciones.</div>
+        </div>
+
+        <h2 id="info-servidor">📊 Información del servidor</h2>
+        <div class="info-card">
+          <div class="info-card-row">
+            <span class="info-label">IP Java</span>
+            <span class="info-val ip-copy" data-ip="play.planetmc.net">play.planetmc.net <span class="copy-hint">📋</span></span>
+          </div>
+          <div class="info-card-row">
+            <span class="info-label">IP Bedrock</span>
+            <span class="info-val ip-copy" data-ip="bedrock.planetmc.net">bedrock.planetmc.net <span class="copy-hint">📋</span></span>
+          </div>
+          <div class="info-card-row">
+            <span class="info-label">Puerto Bedrock</span>
+            <span class="info-val">19132</span>
+          </div>
+          <div class="info-card-row">
+            <span class="info-label">Versión</span>
+            <span class="info-val">1.21.x</span>
+          </div>
+          <div class="info-card-row">
+            <span class="info-label">Modo principal</span>
+            <span class="info-val">Survival</span>
+          </div>
+        </div>
+
+        <h2 id="por-que-jugar">⭐ ¿Por qué jugar en PlanetMC?</h2>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="feature-icon">🌍</div>
+            <div class="feature-title">Comunidad activa</div>
+            <div class="feature-desc">Jugadores constantes y ambiente amigable.</div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">⚙️</div>
+            <div class="feature-title">Sistemas únicos</div>
+            <div class="feature-desc">Economía, protecciones y más.</div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🚀</div>
+            <div class="feature-title">Actualizaciones</div>
+            <div class="feature-desc">Contenido nuevo constantemente.</div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🎉</div>
+            <div class="feature-title">Eventos</div>
+            <div class="feature-desc">Participa en eventos y gana recompensas.</div>
+          </div>
+        </div>
+
+        <h2 id="aventura">🌟 Tu aventura comienza aquí</h2>
+        <p>Cada jugador escribe su propia historia en PlanetMC. Este es solo el comienzo.</p>
+        <div class="alert alert-info">
+          <span class="alert-icon">🌟</span>
+          <div><strong>Prepárate:</strong> explora, construye, haz amigos y diviértete en PlanetMC.</div>
+        </div>
+      `
+    },
+    {
       id:          'normas',
       name:        'Normas del Servidor',
       icon:        '📜',
