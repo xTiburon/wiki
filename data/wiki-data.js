@@ -408,7 +408,7 @@ const WIKI_DATA = {
             <ul class="wiki-list">
               <li>Acceder a la tienda con <code>/shop</code> para vender y comprar items.</li>
               <li>Ver el ranking de jugadores en los leaderboards.</li>
-              <li>Obtener tu <strong>kit de inicio</strong> con <code>/kit novato</code>.</li>
+              <li>Obtener tu <strong>kit de inicio</strong> con <code>/kit inicio</code>.</li>
               <li>Ir al mundo Survival con <code>/warp survival</code>.</li>
             </ul>
 
@@ -435,8 +435,8 @@ const WIKI_DATA = {
               <div class="cmd-item"><code>/spawn</code><span>Volver al Spawn</span></div>
               <div class="cmd-item"><code>/sethome</code><span>Guardar tu ubicación actual</span></div>
               <div class="cmd-item"><code>/home</code><span>Ir a tu hogar guardado</span></div>
-              <div class="cmd-item"><code>/warp</code><span>Ver portales disponibles</span></div>
-              <div class="cmd-item"><code>/kit novato</code><span>Reclamar kit de inicio</span></div>
+              <div class="cmd-item"><code>/warps</code><span>Ver portales disponibles</span></div>
+              <div class="cmd-item"><code>/kit inicio</code><span>Reclamar kit de inicio</span></div>
               <div class="cmd-item"><code>/tpa [jugador]</code><span>Solicitar teletransporte</span></div>
               <div class="cmd-item"><code>/balance</code><span>Ver tu saldo</span></div>
               <div class="cmd-item"><code>/vote</code><span>Votar y ganar recompensas</span></div>
@@ -447,8 +447,8 @@ const WIKI_DATA = {
               <li>Protege siempre tu terreno <strong>antes</strong> de construir cosas valiosas.</li>
               <li>Participa en el chat y pide ayuda: ¡la comunidad es amigable!</li>
               <li>Vende los recursos en exceso en <code>/shop</code> para acumular dinero.</li>
-              <li>Únete a Discord para enterarte de eventos y actualizaciones.</li>
-              <li>Vota diariamente con <code>/vote</code> para obtener recompensas gratuitas.</li>
+              <li>Únete a <strong>Discord</strong> para enterarte de eventos y actualizaciones.</li>
+              <li><strong>Vota</strong> diariamente con <code>/vote</code> para obtener recompensas gratuitas.</li>
             </ul>
           `
         },
