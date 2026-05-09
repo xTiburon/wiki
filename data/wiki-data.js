@@ -458,24 +458,25 @@ const WIKI_DATA = {
           name:        'Economía',
           icon:        '💰',
           path:        'pages/survival/economia.html',
-          description: 'Sistema económico de PlanetMC: cómo ganar y gastar PlanetCoins.',
-          keywords:    ['economia','dinero','planetcoins','plc','tienda','shop','subasta','ah','misiones','votar','jobs','balance'],
+          description: 'Sistema económico de PlanetMC: cómo ganar y gastar dinero en el servidor.',
+          keywords:    ['economia','dinero','tienda','shop','sell','subasta','ah','misiones','votar','balance','vender','comprar'],
           content: `
             <div class="page-hero">
               <div class="page-hero-icon">💰</div>
               <h1>Economía</h1>
-              <p class="page-hero-desc">Todo sobre el sistema económico de PlanetMC: gana, ahorra e intercambia PlanetCoins.</p>
+              <p class="page-hero-desc">Todo sobre el sistema económico de PlanetMC: gana, ahorra e intercambia dinero.</p>
             </div>
 
-            <p>La moneda oficial del servidor es el <strong>PlanetCoin (PLC)</strong>. Puedes ganarla y gastarla de múltiples formas a lo largo de tu aventura.</p>
+            <p>El sistema económico de PlanetMC gira en torno al <strong>dinero</strong>. Puedes ganarlo vendiendo recursos, completando misiones, votando y comerciando con otros jugadores.</p>
 
-            <h2 id="ganar">📈 Cómo Ganar PlanetCoins</h2>
+            <h2 id="ganar">📈 Cómo Ganar Dinero</h2>
             <div class="desc-box">
               <div class="desc-box-header">💡 Fuentes de ingresos</div>
               <div class="desc-box-body">
                 <ul class="wiki-list">
-                  <li>Vender items en la tienda del servidor con <code>/shop</code>.</li>
-                  <li>Publicar items en la subasta con <code>/ah sell [precio]</code>.</li>
+                  <li>Vender ítems en la tienda del servidor con <code>/shop</code>.</li>
+                  <li>Usar <code>/sell all</code> o <code>/sell hand</code> para vender rápidamente.</li>
+                  <li>Publicar ítems en la subasta con <code>/ah sell [precio]</code>.</li>
                   <li>Completar misiones diarias y semanales con <code>/quests</code>.</li>
                   <li>Votar por el servidor con <code>/vote</code> (recompensa diaria).</li>
                   <li>Participar y ganar eventos especiales.</li>
@@ -485,38 +486,60 @@ const WIKI_DATA = {
             </div>
 
             <h2 id="tienda">🛒 Tienda del Servidor (/shop)</h2>
-            <p>La tienda oficial permite intercambiar items con el servidor a <strong>precios fijos</strong>.</p>
+            <p>Al usar <code>/shop</code> se abre un <strong>menú interactivo</strong> con categorías (bloques, comida, cultivos, minerales, etc.) donde puedes comprar y vender ítems a precios fijos.</p>
             <div class="info-card">
               <div class="info-card-row"><span class="info-label">Comando</span><span class="info-val"><code>/shop</code></span></div>
               <div class="info-card-row"><span class="info-label">Comisión</span><span class="info-val">0% (precio directo)</span></div>
             </div>
-            <div class="table-wrap" style="margin-top:16px;">
-              <table class="wiki-table">
-                <thead><tr><th>Item</th><th>Venta al servidor</th><th>Compra al servidor</th></tr></thead>
-                <tbody>
-                  <tr><td>Diamante</td><td>$25 c/u</td><td>$80 c/u</td></tr>
-                  <tr><td>Esmeralda</td><td>$15 c/u</td><td>$50 c/u</td></tr>
-                  <tr><td>Hierro (lingote)</td><td>$3 c/u</td><td>$10 c/u</td></tr>
-                  <tr><td>Oro (lingote)</td><td>$8 c/u</td><td>$25 c/u</td></tr>
-                  <tr><td>Trigo (64)</td><td>$40 por stack</td><td>$120 por stack</td></tr>
-                  <tr><td>Madera (64)</td><td>$20 por stack</td><td>$60 por stack</td></tr>
-                </tbody>
-              </table>
+
+            <div class="desc-box" style="margin-top:16px;">
+              <div class="desc-box-header">🛍️ Cómo comprar</div>
+              <div class="desc-box-body">
+                <ol class="wiki-steps">
+                  <li>Escribe <code>/shop</code> para abrir el menú.</li>
+                  <li>Navega entre las categorías y selecciona el ítem que deseas.</li>
+                  <li>Elige la cantidad y confirma la compra.</li>
+                  <li>El ítem aparecerá directamente en tu inventario.</li>
+                </ol>
+              </div>
+            </div>
+
+            <div class="desc-box" style="margin-top:12px;">
+              <div class="desc-box-header">💵 Cómo vender dentro del menú</div>
+              <div class="desc-box-body">
+                <ol class="wiki-steps">
+                  <li>Abre <code>/shop</code> y busca el ítem que quieres vender.</li>
+                  <li>Haz clic en la opción de <strong>venta</strong> del ítem.</li>
+                  <li>Selecciona la cantidad y confirma. El dinero se añade a tu balance al instante.</li>
+                </ol>
+              </div>
+            </div>
+
+            <h2 id="venta-rapida">⚡ Venta Rápida</h2>
+            <p>Para vender sin abrir el menú, usa estos comandos directos:</p>
+            <div class="cmd-grid">
+              <div class="cmd-item"><code>/sell all</code><span>Vende todos los ítems vendibles de tu inventario de una vez</span></div>
+              <div class="cmd-item"><code>/sell hand</code><span>Vende el ítem que tienes en la mano</span></div>
+            </div>
+
+            <div class="alert alert-info">
+              <span class="alert-icon">💡</span>
+              <div><strong>Consejo:</strong> Usa <code>/sell all</code> al regresar de minar o farmear para vender todo de golpe y ahorrar tiempo.</div>
             </div>
 
             <h2 id="subasta">🏷️ Subasta (/ah)</h2>
-            <p>El Auction House es el mercado de jugadores: lista cualquier item y otros lo compran.</p>
+            <p>El Auction House es el mercado de jugadores: lista cualquier ítem y otros jugadores lo compran.</p>
             <div class="info-card">
               <div class="info-card-row"><span class="info-label">Comando</span><span class="info-val"><code>/ah</code></span></div>
               <div class="info-card-row"><span class="info-label">Duración del listado</span><span class="info-val">48 horas</span></div>
               <div class="info-card-row"><span class="info-label">Comisión</span><span class="info-val">5% del precio de venta</span></div>
-              <div class="info-card-row"><span class="info-label">Máx. items listados</span><span class="info-val">5 (VIP: 15 / MVP: 30)</span></div>
+              <div class="info-card-row"><span class="info-label">Máx. ítems listados</span><span class="info-val">5 (VIP: 15 / MVP: 30)</span></div>
             </div>
             <div class="cmd-grid" style="margin-top:12px;">
               <div class="cmd-item"><code>/ah</code><span>Abrir la subasta</span></div>
-              <div class="cmd-item"><code>/ah sell [precio]</code><span>Vender item en mano</span></div>
-              <div class="cmd-item"><code>/ah search [item]</code><span>Buscar un item</span></div>
-              <div class="cmd-item"><code>/ah expired</code><span>Recoger items no vendidos</span></div>
+              <div class="cmd-item"><code>/ah sell [precio]</code><span>Poner a la venta el ítem en mano</span></div>
+              <div class="cmd-item"><code>/ah search [ítem]</code><span>Buscar un ítem específico</span></div>
+              <div class="cmd-item"><code>/ah expired</code><span>Recuperar ítems no vendidos</span></div>
             </div>
 
             <h2 id="comandos">⌨️ Comandos de Economía</h2>
@@ -525,6 +548,8 @@ const WIKI_DATA = {
               <div class="cmd-item"><code>/pay [jugador] [monto]</code><span>Enviar dinero a otro jugador</span></div>
               <div class="cmd-item"><code>/baltop</code><span>Ranking de jugadores más ricos</span></div>
               <div class="cmd-item"><code>/shop</code><span>Abrir la tienda del servidor</span></div>
+              <div class="cmd-item"><code>/sell all</code><span>Vender todo el inventario vendible</span></div>
+              <div class="cmd-item"><code>/sell hand</code><span>Vender el ítem en mano</span></div>
               <div class="cmd-item"><code>/ah</code><span>Abrir la casa de subastas</span></div>
               <div class="cmd-item"><code>/quests</code><span>Ver misiones disponibles</span></div>
               <div class="cmd-item"><code>/vote</code><span>Votar y ganar recompensas</span></div>
@@ -532,7 +557,7 @@ const WIKI_DATA = {
 
             <div class="alert alert-info">
               <span class="alert-icon">💡</span>
-              <div><strong>Consejo:</strong> Vota diariamente con <code>/vote</code>. ¡Es la forma más fácil de ganar PlanetCoins gratis!</div>
+              <div><strong>Consejo:</strong> Vota diariamente con <code>/vote</code>. ¡Es la forma más fácil de ganar dinero gratis!</div>
             </div>
           `
         },
@@ -542,13 +567,13 @@ const WIKI_DATA = {
           name:        'Protecciones',
           icon:        '🛡️',
           path:        'pages/survival/protecciones.html',
-          description: 'Cómo proteger tu terreno y builds del griefing con GriefPrevention.',
-          keywords:    ['proteger','proteccion','claim','griefprevention','terreno','base','griefing','robo','pala dorada','trust'],
+          description: 'Cómo proteger tu terreno y construcciones del griefing con el sistema de protecciones.',
+          keywords:    ['proteger','proteccion','ps','terreno','base','griefing','robo','pala dorada','miembros','flags','claim'],
           content: `
             <div class="page-hero">
               <div class="page-hero-icon">🛡️</div>
               <h1>Protecciones de Terreno</h1>
-              <p class="page-hero-desc">Protege tu base y construcciones con el sistema GriefPrevention.</p>
+              <p class="page-hero-desc">Protege tu base y construcciones del griefing con el sistema de protecciones del servidor.</p>
             </div>
 
             <div class="alert alert-warn">
@@ -557,54 +582,62 @@ const WIKI_DATA = {
             </div>
 
             <h2 id="como-proteger">🔒 Cómo Proteger tu Terreno</h2>
-            <p>Usamos el plugin <strong>GriefPrevention</strong>. Para reclamar terreno:</p>
+            <p>Para reclamar y proteger un área:</p>
             <ol class="wiki-steps">
               <li>Obtén una <strong>pala dorada</strong> (se otorga al unirte o cómprala en <code>/shop</code>).</li>
               <li>Con la pala en mano, haz <strong>clic derecho</strong> en una esquina de tu terreno.</li>
               <li>Luego haz clic derecho en la <strong>esquina opuesta</strong> (en diagonal).</li>
-              <li>¡Listo! Verás partículas de oro marcando los bordes de tu protección.</li>
+              <li>¡Listo! Verás los bordes de tu protección marcados con partículas.</li>
             </ol>
 
-            <h2 id="bloques">📏 Bloques de Claim</h2>
-            <div class="info-card">
-              <div class="info-card-row"><span class="info-label">Bloques iniciales</span><span class="info-val">100 bloques</span></div>
-              <div class="info-card-row"><span class="info-label">Ganancia</span><span class="info-val">+100 bloques por hora jugada</span></div>
-              <div class="info-card-row"><span class="info-label">Máximo (sin donación)</span><span class="info-val">10,000 bloques</span></div>
-            </div>
+            <h2 id="comandos">⌨️ Comandos de Protección (/ps)</h2>
 
-            <h2 id="comandos">⌨️ Comandos de Protección</h2>
+            <h3 id="info-general" style="margin-top:20px;">📋 Información</h3>
             <div class="cmd-grid">
-              <div class="cmd-item"><code>/claim</code><span>Activar modo reclamación</span></div>
-              <div class="cmd-item"><code>/abandonclaim</code><span>Eliminar el claim actual</span></div>
-              <div class="cmd-item"><code>/claimlist</code><span>Ver tus claims activos</span></div>
-              <div class="cmd-item"><code>/trust [jugador]</code><span>Dar acceso completo</span></div>
-              <div class="cmd-item"><code>/containertrust [jugador]</code><span>Permitir abrir cofres</span></div>
-              <div class="cmd-item"><code>/accesstrust [jugador]</code><span>Permitir puertas y botones</span></div>
-              <div class="cmd-item"><code>/untrust [jugador]</code><span>Quitar permisos</span></div>
-              <div class="cmd-item"><code>/trustlist</code><span>Ver jugadores con acceso</span></div>
+              <div class="cmd-item"><code>/ps info</code><span>Ver información general de la protección</span></div>
+              <div class="cmd-item"><code>/ps info members</code><span>Ver la lista de miembros con acceso</span></div>
+              <div class="cmd-item"><code>/ps info owners</code><span>Ver los propietarios de la protección</span></div>
+              <div class="cmd-item"><code>/ps info flags</code><span>Ver los flags (permisos) configurados</span></div>
             </div>
 
-            <h2 id="trust">🤝 Niveles de Permiso (Trust)</h2>
-            <div class="table-wrap">
-              <table class="wiki-table">
-                <thead><tr><th>Comando</th><th>Permiso otorgado</th></tr></thead>
-                <tbody>
-                  <tr><td><code>/trust</code></td><td>Acceso completo: construir, romper, cofres, puertas</td></tr>
-                  <tr><td><code>/containertrust</code></td><td>Solo abrir cofres, hornos y dispensadores</td></tr>
-                  <tr><td><code>/accesstrust</code></td><td>Solo usar puertas, botones y palancas</td></tr>
-                  <tr><td><code>/permissiontrust</code></td><td>Puede dar permisos a otros jugadores</td></tr>
-                </tbody>
-              </table>
+            <h3 id="miembros" style="margin-top:20px;">👥 Gestión de Miembros</h3>
+            <div class="cmd-grid">
+              <div class="cmd-item"><code>/ps add [jugador]</code><span>Añadir un jugador como miembro</span></div>
+              <div class="cmd-item"><code>/ps remove [jugador]</code><span>Quitar a un jugador de la protección</span></div>
+              <div class="cmd-item"><code>/ps addowner [jugador]</code><span>Dar rol de propietario a un jugador</span></div>
+              <div class="cmd-item"><code>/ps removeowner [jugador]</code><span>Quitar el rol de propietario a un jugador</span></div>
+            </div>
+
+            <h3 id="gestion" style="margin-top:20px;">⚙️ Gestión de la Protección</h3>
+            <div class="cmd-grid">
+              <div class="cmd-item"><code>/ps view</code><span>Mostrar visualmente los bordes de la protección</span></div>
+              <div class="cmd-item"><code>/ps center</code><span>Teletransportarte al centro de la protección</span></div>
+              <div class="cmd-item"><code>/ps hide</code><span>Ocultar la protección de otros jugadores</span></div>
+              <div class="cmd-item"><code>/ps unhide</code><span>Hacer visible la protección nuevamente</span></div>
+              <div class="cmd-item"><code>/ps reclaim</code><span>Recuperar una protección caducada o abandonada</span></div>
+            </div>
+
+            <h3 id="flags" style="margin-top:20px;">🚩 Flags (Permisos Avanzados)</h3>
+            <div class="cmd-grid">
+              <div class="cmd-item"><code>/ps flag [nombre] [valor]</code><span>Configurar un flag específico con un valor</span></div>
+              <div class="cmd-item"><code>/ps flag [nombre]</code><span>Ver el valor actual de un flag</span></div>
+              <div class="cmd-item"><code>/ps flag defaults</code><span>Restaurar todos los flags a sus valores por defecto</span></div>
+            </div>
+
+            <h3 id="prioridad" style="margin-top:20px;">📊 Prioridad</h3>
+            <div class="cmd-grid">
+              <div class="cmd-item"><code>/ps priority [número]</code><span>Establecer la prioridad de la protección</span></div>
+              <div class="cmd-item"><code>/ps priority</code><span>Ver la prioridad actual de la protección</span></div>
             </div>
 
             <div class="alert alert-info">
               <span class="alert-icon">💡</span>
-              <div>Cuanto más tiempo juegues, más bloques de claim acumulas. ¡Los rangos VIP y MVP tienen bonus extra!</div>
+              <div>Cuanto más tiempo juegues, más bloques de protección acumulas. ¡Los rangos VIP y MVP tienen bonificaciones extra!</div>
             </div>
 
             <div class="alert alert-warn">
               <span class="alert-icon">⚠️</span>
-              <div><strong>Cuidado:</strong> Si usas <code>/abandonclaim</code>, la protección se elimina <strong>permanentemente</strong>.</div>
+              <div><strong>Cuidado:</strong> Eliminar tu protección la borra <strong>permanentemente</strong>. Asegúrate antes de hacerlo.</div>
             </div>
           `
         },
