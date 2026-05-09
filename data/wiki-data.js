@@ -568,7 +568,7 @@ const WIKI_DATA = {
           icon:        '🛡️',
           path:        'pages/survival/protecciones.html',
           description: 'Cómo proteger tu terreno y construcciones del griefing con el sistema de protecciones.',
-          keywords:    ['proteger','proteccion','ps','terreno','base','griefing','robo','pala dorada','miembros','flags','claim'],
+          keywords:    ['proteger','proteccion','ps','terreno','base','griefing','robo','proteccion','miembros','flags','claim'],
           content: `
             <div class="page-hero">
               <div class="page-hero-icon">🛡️</div>
@@ -584,10 +584,10 @@ const WIKI_DATA = {
             <h2 id="como-proteger">🔒 Cómo Proteger tu Terreno</h2>
             <p>Para reclamar y proteger un área:</p>
             <ol class="wiki-steps">
-              <li>Obtén una <strong>pala dorada</strong> (se otorga al unirte o cómprala en <code>/shop</code>).</li>
-              <li>Con la pala en mano, haz <strong>clic derecho</strong> en una esquina de tu terreno.</li>
-              <li>Luego haz clic derecho en la <strong>esquina opuesta</strong> (en diagonal).</li>
-              <li>¡Listo! Verás los bordes de tu protección marcados con partículas.</li>
+              <li>Compra una <strong>proteccion</strong> en <code>/protecciones</code>).</li>
+              <li>Selecciona el tamaño de tu <strong>proteccion</strong> (10x10, 20x20, etc)</li>
+              <li>Coloca la <strong>proteccion</strong></li>
+              <li>¡Listo! Ahora tendrás la zona protegida para cada lado y de arriba para abajo es infinito.</li>
             </ol>
 
             <h2 id="comandos">⌨️ Comandos de Protección (/ps)</h2>
