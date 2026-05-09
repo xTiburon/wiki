@@ -584,7 +584,7 @@ const WIKI_DATA = {
             <h2 id="como-proteger">🔒 Cómo Proteger tu Terreno</h2>
             <p>Para reclamar y proteger un área:</p>
             <ol class="wiki-steps">
-              <li>Compra una <strong>proteccion</strong> en <code>/protecciones</code>).</li>
+              <li>Compra una <strong>proteccion</strong> con el comando <code>/protecciones</code></li>
               <li>Selecciona el tamaño de tu <strong>proteccion</strong> (10x10, 20x20, etc)</li>
               <li>Coloca la <strong>proteccion</strong></li>
               <li>¡Listo! Ahora tendrás la zona protegida para cada lado y de arriba para abajo es infinito.</li>
