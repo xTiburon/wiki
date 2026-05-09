@@ -48,7 +48,7 @@ const WIKI_DATA = {
 
         <p>Nos alegra tenerte aquí. En esta wiki encontrarás toda la información necesaria
         para comenzar tu aventura: desde <strong>guías básicas</strong> hasta sistemas más avanzados.</p>
-        <p>PlanetMC es una comunidad enfocada en ofrecer una experiencia <strong>survival divertida,
+        <p>PlanetMC es una comunidad enfocada en ofrecer una experiencia <strong>divertida,
         estable y en constante evolución</strong>.</p>
 
         <h2 id="que-encontraras">🚀 ¿Qué encontrarás aquí?</h2>
