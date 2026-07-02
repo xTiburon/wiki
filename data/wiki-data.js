@@ -409,7 +409,7 @@ const WIKI_DATA = {
               <li>Acceder a la tienda con <code>/shop</code> para vender y comprar items.</li>
               <li>Ver el ranking de jugadores en los leaderboards.</li>
               <li>Obtener tu <strong>kit de inicio</strong> con <code>/kit inicio</code>.</li>
-              <li>Ir al mundo Survival con <code>/warp survival</code>.</li>
+              <li>Ir al mundo Survival con <code>/rtp</code>.</li>
             </ul>
 
             <h2 id="kit-inicio">🎁 Kit de Inicio</h2>
