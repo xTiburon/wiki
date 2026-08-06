@@ -23,6 +23,7 @@ window._layoutLoaded = true;
     if (currentFile === '') currentFile = 'index.html';
 
     var foundPage = null;
+    var foundCategory = null;
 
     // 1. Buscar en standalonePages (incluye bienvenida → index.html)
     if (WIKI_DATA.standalonePages) {
@@ -45,6 +46,7 @@ window._layoutLoaded = true;
           var pageFile = page.path.split('/').pop();
           if (pageFile === currentFile) {
             foundPage = page;
+            foundCategory = cat;
             break;
           }
         }
@@ -52,8 +54,11 @@ window._layoutLoaded = true;
       }
     }
 
+    window._wikiCurrentPage = foundPage;
+    window._wikiCurrentCategory = foundCategory;
+
     if (foundPage && foundPage.content) {
-      slot.innerHTML = foundPage.content;
+      slot.innerHTML = buildBreadcrumb(foundPage, foundCategory, currentFile) + foundPage.content;
       document.title = foundPage.name + ' \u2014 PlanetMC Wiki';
     } else if (currentFile !== 'index.html') {
       slot.innerHTML = '<div class="page-hero" style="text-align:center;">' +
@@ -80,6 +85,20 @@ window._layoutLoaded = true;
     var pageFile = pagePath.split('/').pop();
     var currentFile = current.split('/').pop();
     return pageFile !== '' && pageFile === currentFile;
+  }
+
+  function buildBreadcrumb(page, category, currentFile) {
+    if (currentFile === 'index.html' && !category) return '';
+    var html = '<nav class="wiki-breadcrumb" aria-label="Ruta de navegación">';
+    html += '<a href="' + resolveLink('index.html') + '">' + Icon('home') + ' Wiki</a>';
+    if (category) {
+      html += '<span class="bc-sep">›</span>';
+      html += '<span>' + Icon(category.icon) + ' ' + category.name + '</span>';
+    }
+    html += '<span class="bc-sep">›</span>';
+    html += '<span class="bc-current">' + (page.icon ? Icon(page.icon) + ' ' : '') + page.name + '</span>';
+    html += '</nav>';
+    return html;
   }
 
   function getSidebarState() {
@@ -111,7 +130,7 @@ window._layoutLoaded = true;
       WIKI_DATA.standalonePages.forEach(function(page) {
         var active = isCurrentPage(page.path) ? ' active' : '';
         html += '<a href="' + resolveLink(page.path) + '" class="sidebar-page-link sidebar-standalone' + active + '">' +
-          (page.icon ? '<span class="page-icon">' + page.icon + '</span>' : '') +
+          (page.icon ? '<span class="page-icon">' + Icon(page.icon) + '</span>' : '') +
           page.name + '</a>';
       });
     }
@@ -121,7 +140,7 @@ window._layoutLoaded = true;
       var isOpen = state[cat.id] !== undefined ? state[cat.id] : cat.open;
       html += '<div class="sidebar-category" data-cat="' + cat.id + '">' +
         '<button class="sidebar-cat-btn ' + (isOpen ? 'open' : '') + '" data-cat="' + cat.id + '">' +
-        '<span class="cat-icon">' + cat.icon + '</span>' +
+        '<span class="cat-icon">' + Icon(cat.icon) + '</span>' +
         '<span class="cat-name">' + cat.name + '</span>' +
         '<svg class="cat-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>' +
         '</button>' +
@@ -130,7 +149,7 @@ window._layoutLoaded = true;
       cat.pages.forEach(function(page) {
         var active = isCurrentPage(page.path) ? 'active' : '';
         html += '<a href="' + resolveLink(page.path) + '" class="sidebar-page-link ' + active + '">' +
-          (page.icon ? '<span class="page-icon">' + page.icon + '</span>' : '') +
+          (page.icon ? '<span class="page-icon">' + Icon(page.icon) + '</span>' : '') +
           page.name + '</a>';
       });
 
@@ -156,7 +175,7 @@ window._layoutLoaded = true;
     return '<div class="nav-brand">' +
       '<button id="hamburger-btn" class="hamburger-btn" aria-label="Men\u00FA"><span></span><span></span><span></span></button>' +
       '<a href="' + resolveLink('index.html') + '" class="nav-logo">' +
-      '<div class="nav-logo-planet"></div>' +
+      '<img src="' + ROOT + 'assets/img/logo-sm.webp" alt="' + WIKI_DATA.site.name + '" class="nav-logo-img" width="30" height="30">' +
       '<span class="logo-name">' + WIKI_DATA.site.name + '</span>' +
       '<span class="logo-sep">|</span>' +
       '<span class="logo-wiki">' + WIKI_DATA.site.wikiTitle + '</span>' +
@@ -169,7 +188,7 @@ window._layoutLoaded = true;
 
     // Links de categorías para el footer
     var catLinks = WIKI_DATA.categories.map(function(cat) {
-      return '<a href="' + resolveLink(cat.pages[0].path) + '" class="footer-link">' + cat.icon + ' ' + cat.name + '</a>';
+      return '<a href="' + resolveLink(cat.pages[0].path) + '" class="footer-link">' + Icon(cat.icon) + ' ' + cat.name + '</a>';
     }).join('');
 
     // Links de standalonePages para el footer (excepto bienvenida)
@@ -178,7 +197,7 @@ window._layoutLoaded = true;
       WIKI_DATA.standalonePages.forEach(function(page) {
         if (page.id !== 'bienvenida') {
           standaloneLinks += '<a href="' + resolveLink(page.path) + '" class="footer-link">' +
-            (page.icon || '') + ' ' + page.name + '</a>';
+            (page.icon ? Icon(page.icon) : '') + ' ' + page.name + '</a>';
         }
       });
     }
@@ -215,9 +234,9 @@ window._layoutLoaded = true;
     var pageTitle = document.title;
 
     document.body.innerHTML =
-      '<div class="nebula"></div>' +
-      '<div class="destiny-grid"></div>' +
-      '<div class="scanlines"></div>' +
+      '<div class="cosmic-bg" aria-hidden="true"><div class="planet-orb orb-1"></div><div class="planet-orb orb-2"></div></div>' +
+      '<canvas id="starCanvas" aria-hidden="true"></canvas>' +
+      '<canvas class="dust-canvas" id="dustCanvas" aria-hidden="true"></canvas>' +
       '<div id="sidebar-overlay" class="sidebar-overlay"></div>' +
       '<header id="wiki-header">' + buildNavbar() + '</header>' +
       '<div id="wiki-layout">' +
@@ -227,7 +246,7 @@ window._layoutLoaded = true;
         '</main>' +
       '</div>' +
       '<footer id="wiki-footer">' + buildFooter() + '</footer>' +
-      '<div id="copy-toast" class="copy-toast">\u2705 \u00A1Copiado al portapapeles!</div>';
+      '<div id="copy-toast" class="copy-toast">' + Icon('check') + ' \u00A1Copiado al portapapeles!</div>';
 
     document.title = pageTitle;
   }
@@ -279,7 +298,7 @@ window._layoutLoaded = true;
         var ip = el.dataset.ip;
         if (!ip) return;
         navigator.clipboard.writeText(ip)
-          .then(function() { showToast('\u2705 "' + ip + '" copiado'); })
+          .then(function() { showToast(Icon('check') + ' "' + ip + '" copiado'); })
           .catch(function() {
             var ta = document.createElement('textarea');
             ta.value = ip;
@@ -287,7 +306,7 @@ window._layoutLoaded = true;
             ta.select();
             document.execCommand('copy');
             document.body.removeChild(ta);
-            showToast('\u2705 "' + ip + '" copiado');
+            showToast(Icon('check') + ' "' + ip + '" copiado');
           });
       });
     });
@@ -322,7 +341,7 @@ window._layoutLoaded = true;
   function showToast(msg) {
     var t = document.getElementById('copy-toast');
     if (!t) return;
-    if (msg) t.textContent = msg;
+    if (msg) t.innerHTML = msg;
     t.classList.add('show');
     setTimeout(function() { t.classList.remove('show'); }, 2200);
   }
@@ -333,6 +352,7 @@ window._layoutLoaded = true;
     injectLayout();
     bindEvents();
     if (typeof initSearch === 'function') initSearch();
+    if (typeof window.initWikiBackground === 'function') window.initWikiBackground();
   }
 
   if (document.readyState === 'loading') {

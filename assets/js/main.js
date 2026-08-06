@@ -24,13 +24,33 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  /* ── Grilla de categorías (solo en Bienvenida) ─ */
+  const catGrid = document.getElementById('wikiCategoriesGrid');
+  if (catGrid && typeof WIKI_DATA !== 'undefined') {
+    const ROOT = window.ROOT_PATH || './';
+    catGrid.innerHTML = WIKI_DATA.categories.map(cat => `
+      <div class="wiki-cat-card" style="--cat-color:${cat.color}">
+        <div class="wiki-cat-header">
+          <div class="wiki-cat-icon">${Icon(cat.icon, '1.6em')}</div>
+          <div>
+            <div class="wiki-cat-title">${cat.name}</div>
+            <div class="wiki-cat-count">${cat.pages.length} página${cat.pages.length === 1 ? '' : 's'}</div>
+          </div>
+        </div>
+        <div class="wiki-cat-pages">
+          ${cat.pages.map(p => `<a href="${ROOT + p.path}" class="wiki-cat-page-link">${p.icon ? Icon(p.icon) : ''} ${p.name}</a>`).join('')}
+        </div>
+      </div>
+    `).join('');
+  }
+
   /* ── Copiar IPs con click ───────────────── */
   document.querySelectorAll('.ip-copy').forEach(el => {
     el.addEventListener('click', () => {
       const ip = el.dataset.ip;
       if (!ip) return;
       navigator.clipboard.writeText(ip).then(() => {
-        if (typeof showWikiToast === 'function') showWikiToast(`✅ "${ip}" copiado`);
+        if (typeof showWikiToast === 'function') showWikiToast(`${Icon('check')} "${ip}" copiado`);
       }).catch(() => {
         // fallback
         const textarea = document.createElement('textarea');
@@ -39,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         textarea.select();
         document.execCommand('copy');
         document.body.removeChild(textarea);
-        if (typeof showWikiToast === 'function') showWikiToast(`✅ "${ip}" copiado`);
+        if (typeof showWikiToast === 'function') showWikiToast(`${Icon('check')} "${ip}" copiado`);
       });
     });
   });
@@ -48,10 +68,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const content = document.getElementById('wiki-content-wrap');
   if (content) {
     const headings = content.querySelectorAll('h2[id], h3[id]');
-    if (headings.length >= 3) {
+    if (headings.length >= 5) {
       const toc = document.createElement('div');
       toc.className = 'wiki-toc';
-      toc.innerHTML = '<div class="toc-title">📋 En esta página</div>';
+      toc.innerHTML = '<div class="toc-title">' + Icon('clipboard-list') + ' En esta página</div>';
       const list = document.createElement('ul');
       list.className = 'toc-list';
       headings.forEach(h => {

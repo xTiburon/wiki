@@ -13,6 +13,23 @@ function initSearch() {
 
   /* ── Construir índice de búsqueda ─────── */
   const searchIndex = [];
+
+  if (WIKI_DATA.standalonePages) {
+    WIKI_DATA.standalonePages.forEach(page => {
+      searchIndex.push({
+        id:          page.id,
+        name:        page.name,
+        path:        ROOT + page.path,
+        category:    'Wiki',
+        catIcon:     page.icon || 'file-search',
+        catColor:    'var(--cyan)',
+        description: page.description || '',
+        keywords:    (page.keywords || []).join(' ').toLowerCase(),
+        content:     stripHTML(page.content || '').toLowerCase(),
+      });
+    });
+  }
+
   WIKI_DATA.categories.forEach(cat => {
     cat.pages.forEach(page => {
       searchIndex.push({
@@ -63,7 +80,7 @@ function initSearch() {
     if (!results.length) {
       panel.innerHTML = `
         <div class="search-empty">
-          <div class="search-empty-icon">🔭</div>
+          <div class="search-empty-icon">${Icon('file-search', '1.8rem')}</div>
           <div>Sin resultados para "<strong>${escapeHTML(query)}</strong>"</div>
         </div>
       `;
@@ -73,7 +90,7 @@ function initSearch() {
 
     const html = results.map(r => `
       <a href="${r.path}" class="search-result-item">
-        <div class="search-result-cat" style="color:${r.catColor}">${r.catIcon} ${r.category}</div>
+        <div class="search-result-cat" style="color:${r.catColor}">${Icon(r.catIcon)} ${r.category}</div>
         <div class="search-result-name">${highlight(r.name, query)}</div>
         <div class="search-result-desc">${escapeHTML(r.description)}</div>
       </a>
