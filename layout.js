@@ -1,0 +1,424 @@
+/* ═══════════════════════════════════════════════════════════════
+   layout.js  —  Inyector central de layout
+   PlanetMC Wiki
+   ═══════════════════════════════════════════════════════════════ */
+
+// Guard: evitar doble ejecución si el script se carga más de una vez
+if (typeof window._layoutLoaded === 'undefined') {
+window._layoutLoaded = true;
+
+(function () {
+
+  var ROOT = window.ROOT_PATH !== undefined ? window.ROOT_PATH : './';
+
+  /* ══════════════════════════════════════════════════════════════
+     INYECCIÓN DE CONTENIDO DESDE WIKI_DATA
+     ══════════════════════════════════════════════════════════════ */
+  function injectPageContent() {
+    var slot = document.getElementById('content-slot');
+    if (!slot) return;
+    if (slot.innerHTML.trim() !== '') return;
+
+    var currentFile = window.location.pathname.split('/').pop() || 'index.html';
+    if (currentFile === '') currentFile = 'index.html';
+
+    var foundPage = null;
+    var foundCategory = null;
+
+    // 1. Buscar en standalonePages (incluye bienvenida → index.html)
+    if (WIKI_DATA.standalonePages) {
+      for (var s = 0; s < WIKI_DATA.standalonePages.length; s++) {
+        var sp = WIKI_DATA.standalonePages[s];
+        var spFile = sp.path.split('/').pop();
+        if (spFile === currentFile) {
+          foundPage = sp;
+          break;
+        }
+      }
+    }
+
+    // 2. Buscar en categories si no se encontró antes
+    if (!foundPage) {
+      for (var i = 0; i < WIKI_DATA.categories.length; i++) {
+        var cat = WIKI_DATA.categories[i];
+        for (var j = 0; j < cat.pages.length; j++) {
+          var page = cat.pages[j];
+          var pageFile = page.path.split('/').pop();
+          if (pageFile === currentFile) {
+            foundPage = page;
+            foundCategory = cat;
+            break;
+          }
+        }
+        if (foundPage) break;
+      }
+    }
+
+    window._wikiCurrentPage = foundPage;
+    window._wikiCurrentCategory = foundCategory;
+
+    if (foundPage && foundPage.content) {
+      slot.innerHTML = buildBreadcrumb(foundPage, foundCategory, currentFile) + foundPage.content;
+      document.title = foundPage.name + ' \u2014 PlanetMC Wiki';
+    } else if (currentFile !== 'index.html') {
+      slot.innerHTML = '<div class="page-hero" style="text-align:center;">' +
+        '<div style="font-size:3rem;margin-bottom:16px;">\uD83D\uDD0D</div>' +
+        '<h1>P\u00E1gina no encontrada</h1>' +
+        '<p class="page-hero-desc">El contenido de esta p\u00E1gina no est\u00E1 registrado en la wiki todav\u00EDa.</p>' +
+        '</div>' +
+        '<div class="warn-box">' +
+        '<span class="warn-icon">\u26A0\uFE0F</span>' +
+        '<div>Si eres administrador, verifica que el <code>path</code> en <code>wiki-data.js</code> coincida con la ruta real del archivo HTML.</div>' +
+        '</div>';
+    }
+  }
+
+  /* ══════════════════════════════════════════════════════════════
+     HELPERS
+     ══════════════════════════════════════════════════════════════ */
+  function resolveLink(pagePath) {
+    return ROOT + pagePath;
+  }
+
+  function isCurrentPage(pagePath) {
+    var current = window.location.pathname;
+    var pageFile = pagePath.split('/').pop();
+    var currentFile = current.split('/').pop();
+    return pageFile !== '' && pageFile === currentFile;
+  }
+
+  function buildBreadcrumb(page, category, currentFile) {
+    if (currentFile === 'index.html' && !category) return '';
+    var html = '<nav class="wiki-breadcrumb" aria-label="Ruta de navegación">';
+    html += '<a href="' + resolveLink('index.html') + '">' + Icon('home') + ' Wiki</a>';
+    if (category) {
+      html += '<span class="bc-sep">›</span>';
+      html += '<span>' + Icon(category.icon) + ' ' + category.name + '</span>';
+    }
+    html += '<span class="bc-sep">›</span>';
+    html += '<span class="bc-current">' + (page.icon ? Icon(page.icon) + ' ' : '') + page.name + '</span>';
+    html += '</nav>';
+    return html;
+  }
+
+  function getSidebarState() {
+    try { return JSON.parse(localStorage.getItem('wikiSidebarState') || '{}'); }
+    catch (e) { return {}; }
+  }
+  function saveSidebarState(state) {
+    try { localStorage.setItem('wikiSidebarState', JSON.stringify(state)); }
+    catch (e) {}
+  }
+
+  /* ══════════════════════════════════════════════════════════════
+     BUILDERS
+     ══════════════════════════════════════════════════════════════ */
+  function buildSidebar() {
+    var state = getSidebarState();
+    var html = '<div class="sidebar-search-wrap">' +
+      '<div class="sidebar-search">' +
+      '<svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>' +
+      '<input type="text" id="sidebar-search-input" placeholder="Buscar en la wiki..." autocomplete="off" spellcheck="false">' +
+      '<button id="sidebar-search-clear" class="search-clear" title="Limpiar">\u2715</button>' +
+      '</div>' +
+      '<div id="search-results-panel" class="search-results-panel"></div>' +
+      '</div>' +
+      '<nav class="sidebar-nav">';
+
+    // Páginas sueltas (sin categoría) — van primero
+    if (WIKI_DATA.standalonePages) {
+      WIKI_DATA.standalonePages.forEach(function(page) {
+        var active = isCurrentPage(page.path) ? ' active' : '';
+        html += '<a href="' + resolveLink(page.path) + '" class="sidebar-page-link sidebar-standalone' + active + '">' +
+          (page.icon ? '<span class="page-icon">' + Icon(page.icon) + '</span>' : '') +
+          page.name + '</a>';
+      });
+    }
+
+    // Categorías: título de grupo → categoría desplegable → (subcategoría) → páginas
+    var lastGroup = null;
+    WIKI_DATA.categories.forEach(function(cat) {
+      if (cat.group && cat.group !== lastGroup) {
+        lastGroup = cat.group;
+        html += '<div class="sidebar-group">' + cat.group + '</div>';
+      }
+
+      var isOpen = state[cat.id] !== undefined ? state[cat.id] : cat.open;
+      var single = !cat.subcats && cat.pages && cat.pages.length === 1;
+
+      // Una categoría de una sola página se dibuja como enlace directo
+      if (single) {
+        var only = cat.pages[0];
+        var act = isCurrentPage(only.path) ? ' active' : '';
+        html += '<a href="' + resolveLink(only.path) + '" class="sidebar-cat-link' + act + '" style="--cat-color:' + cat.color + '">' +
+          '<span class="cat-icon">' + Icon(cat.icon) + '</span>' +
+          '<span class="cat-name">' + cat.name + '</span></a>';
+        return;
+      }
+
+      html += '<div class="sidebar-category" data-cat="' + cat.id + '" style="--cat-color:' + cat.color + '">' +
+        '<button class="sidebar-cat-btn ' + (isOpen ? 'open' : '') + '" data-cat="' + cat.id + '">' +
+        '<span class="cat-icon">' + Icon(cat.icon) + '</span>' +
+        '<span class="cat-name">' + cat.name + '</span>' +
+        '<svg class="cat-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>' +
+        '</button>' +
+        '<div class="sidebar-pages ' + (isOpen ? 'open' : '') + '">';
+
+      if (cat.subcats) {
+        cat.subcats.forEach(function(sub) {
+          var subKey  = cat.id + ':' + sub.id;
+          var subOpen = state[subKey] !== undefined ? state[subKey]
+                      : sub.pages.some(function(p) { return isCurrentPage(p.path); });
+          html += '<div class="sidebar-subcat" data-cat="' + subKey + '">' +
+            '<button class="sidebar-sub-btn ' + (subOpen ? 'open' : '') + '" data-cat="' + subKey + '">' +
+            '<span class="sub-icon">' + Icon(sub.icon) + '</span>' +
+            '<span class="cat-name">' + sub.name + '</span>' +
+            '<svg class="cat-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>' +
+            '</button>' +
+            '<div class="sidebar-pages sidebar-subpages ' + (subOpen ? 'open' : '') + '">';
+          sub.pages.forEach(function(page) {
+            html += '<a href="' + resolveLink(page.path) + '" class="sidebar-page-link ' + (isCurrentPage(page.path) ? 'active' : '') + '">' +
+              page.name + '</a>';
+          });
+          html += '</div></div>';
+        });
+      } else {
+        cat.pages.forEach(function(page) {
+          html += '<a href="' + resolveLink(page.path) + '" class="sidebar-page-link ' + (isCurrentPage(page.path) ? 'active' : '') + '">' +
+            page.name + '</a>';
+        });
+      }
+
+      html += '</div></div>';
+    });
+
+    html += '</nav>';
+    return html;
+  }
+
+  function buildNavbar() {
+    var iconDiscord = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-3px;flex-shrink:0;"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057.1 18.08.105 18.1.12 18.117a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>';
+    var iconShop = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>';
+
+    var navHTML =
+      '<a href="' + WIKI_DATA.site.shopURL + '" target="_blank" rel="noopener" class="nav-link nav-link-shop">' +
+        iconShop + 'Tienda' +
+      '</a>' +
+      '<a href="' + WIKI_DATA.site.discordURL + '" target="_blank" rel="noopener" class="nav-link nav-link-discord">' +
+        iconDiscord + 'Discord' +
+      '</a>';
+
+    return '<div class="nav-brand">' +
+      '<button id="hamburger-btn" class="hamburger-btn" aria-label="Men\u00FA"><span></span><span></span><span></span></button>' +
+      '<a href="' + resolveLink('index.html') + '" class="nav-logo">' +
+      '<img src="' + ROOT + 'assets/img/logo-sm.webp" alt="' + WIKI_DATA.site.name + '" class="nav-logo-img" width="30" height="30">' +
+      '<span class="logo-name">' + WIKI_DATA.site.name + '</span>' +
+      '<span class="logo-sep">|</span>' +
+      '<span class="logo-wiki">' + WIKI_DATA.site.wikiTitle + '</span>' +
+      '</a></div>' +
+      '<div class="nav-links">' + navHTML + '</div>';
+  }
+
+  function buildFooter() {
+    var year = new Date().getFullYear();
+    var site = WIKI_DATA.site;
+
+    // Columna: una entrada por categoría (con sus subcategorías o páginas debajo)
+    function col(cat) {
+      var items = (cat.subcats || cat.pages).map(function(x) {
+        var target = x.pages ? x.pages[0] : x;
+        return '<a href="' + resolveLink(target.path) + '" class="footer-link">' + x.name + '</a>';
+      }).join('');
+      return '<div class="footer-col">' +
+        '<div class="footer-col-title">' + Icon(cat.icon) + ' ' + cat.name + '</div>' +
+        items + '</div>';
+    }
+
+    var cols = WIKI_DATA.categories.map(col).join('');
+
+    var comunidad = '<div class="footer-col">' +
+      '<div class="footer-col-title">' + Icon('users') + ' Comunidad</div>' +
+      '<a href="' + site.discordURL + '" target="_blank" rel="noopener" class="footer-link">Discord</a>' +
+      '<a href="' + site.shopURL + '" target="_blank" rel="noopener" class="footer-link">Tienda oficial</a>' +
+      '<a href="' + site.voteURL + '" target="_blank" rel="noopener" class="footer-link">Votar por el servidor</a>' +
+      '<a href="' + site.mainURL + '" target="_blank" rel="noopener" class="footer-link">planetmc.net</a>' +
+      '</div>';
+
+    return '<div class="footer-top">' +
+        '<div class="footer-brand">' +
+          '<a href="' + resolveLink('index.html') + '" class="footer-logo">' +
+            '<img src="' + ROOT + 'logo.png" alt="' + site.name + '" class="footer-logo-img">' +
+            '<span class="footer-logo-text"><strong>' + site.name + '</strong><span>' + site.wikiTitle + '</span></span>' +
+          '</a>' +
+          '<p class="footer-tagline">' + site.tagline + '. Survival en español para Java y Bedrock, Premium y No Premium.</p>' +
+          '<div class="footer-connect">' +
+            '<div class="footer-connect-title">Entra al servidor</div>' +
+            '<button type="button" class="footer-ip ip-copy java" data-ip="' + site.javaIP + '">' +
+              '<span class="footer-ip-label">' + Icon('coffee') + ' Java</span>' +
+              '<span class="footer-ip-val">' + site.javaIP + '</span>' +
+              '<span class="footer-ip-copy">' + Icon('copy') + '</span>' +
+            '</button>' +
+            '<button type="button" class="footer-ip ip-copy bedrock" data-ip="' + site.bedrockIP + '">' +
+              '<span class="footer-ip-label">' + Icon('smartphone') + ' Bedrock</span>' +
+              '<span class="footer-ip-val">' + site.bedrockIP + '<span class="footer-ip-port">:' + site.bedrockPort + '</span></span>' +
+              '<span class="footer-ip-copy">' + Icon('copy') + '</span>' +
+            '</button>' +
+          '</div>' +
+        '</div>' +
+        '<div class="footer-cols">' + cols + comunidad + '</div>' +
+      '</div>' +
+      '<div class="footer-bottom">' +
+        '<span>\u00A9 ' + year + ' ' + site.name + ' \u2014 Todos los derechos reservados</span>' +
+        '<span class="footer-meta">' +
+          '<span class="footer-status">' + Icon('globe') + ' Minecraft ' + site.version + '</span>' +
+          '<a href="' + resolveLink('pages/soporte.html') + '" class="footer-link footer-link-inline">Soporte</a>' +
+          '<a href="' + resolveLink('pages/normas.html') + '" class="footer-link footer-link-inline">Normas</a>' +
+        '</span>' +
+      '</div>';
+  }
+
+
+  /* ══════════════════════════════════════════════════════════════
+     INYECTAR LAYOUT
+     ══════════════════════════════════════════════════════════════ */
+  function injectLayout() {
+    injectPageContent();
+
+    var slot    = document.getElementById('content-slot');
+    var content = slot ? slot.innerHTML : '';
+    var pageTitle = document.title;
+
+    document.body.innerHTML =
+      '<div class="cosmic-bg" aria-hidden="true"><div class="planet-orb orb-1"></div><div class="planet-orb orb-2"></div></div>' +
+      '<canvas id="starCanvas" aria-hidden="true"></canvas>' +
+      '<canvas class="dust-canvas" id="dustCanvas" aria-hidden="true"></canvas>' +
+      '<div id="sidebar-overlay" class="sidebar-overlay"></div>' +
+      '<header id="wiki-header">' + buildNavbar() + '</header>' +
+      '<div id="wiki-layout">' +
+        '<aside id="wiki-sidebar" class="wiki-sidebar">' + buildSidebar() + '</aside>' +
+        '<main id="wiki-main" class="wiki-main">' +
+          '<div class="wiki-content-wrap" id="wiki-content-wrap">' + content + '</div>' +
+        '</main>' +
+      '</div>' +
+      '<footer id="wiki-footer">' + buildFooter() + '</footer>' +
+      '<div id="copy-toast" class="copy-toast">' + Icon('check') + ' \u00A1Copiado al portapapeles!</div>';
+
+    document.title = pageTitle;
+  }
+
+  /* ══════════════════════════════════════════════════════════════
+     EVENTOS
+     ══════════════════════════════════════════════════════════════ */
+  function bindEvents() {
+    var hamburger = document.getElementById('hamburger-btn');
+    var sidebar   = document.getElementById('wiki-sidebar');
+    var overlay   = document.getElementById('sidebar-overlay');
+
+    function openMenu() {
+      sidebar.classList.add('open');
+      overlay.classList.add('visible');
+      if (hamburger) hamburger.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('visible');
+      if (hamburger) hamburger.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    if (hamburger) hamburger.addEventListener('click', function() {
+      sidebar.classList.contains('open') ? closeMenu() : openMenu();
+    });
+    if (overlay) overlay.addEventListener('click', closeMenu);
+
+    // Categorías expandibles
+    document.querySelectorAll('.sidebar-cat-btn, .sidebar-sub-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var catId  = btn.dataset.cat;
+        var pages  = btn.nextElementSibling;
+        var isOpen = btn.classList.contains('open');
+        btn.classList.toggle('open', !isOpen);
+        pages.classList.toggle('open', !isOpen);
+        var state = getSidebarState();
+        state[catId] = !isOpen;
+        saveSidebarState(state);
+      });
+    });
+
+    // Copiar IPs
+    document.querySelectorAll('.ip-copy').forEach(function(el) {
+      el.style.cursor = 'pointer';
+      el.addEventListener('click', function() {
+        var ip = el.dataset.ip;
+        if (!ip) return;
+        navigator.clipboard.writeText(ip)
+          .then(function() { showToast(Icon('check') + ' "' + ip + '" copiado'); })
+          .catch(function() {
+            var ta = document.createElement('textarea');
+            ta.value = ip;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            showToast(Icon('check') + ' "' + ip + '" copiado');
+          });
+      });
+    });
+
+    // Resaltar página activa y abrir todos sus contenedores (categoría y subcategoría)
+    document.querySelectorAll('.sidebar-page-link').forEach(function(link) {
+      var linkFile    = link.getAttribute('href').split('/').pop();
+      var currentFile = window.location.pathname.split('/').pop() || 'index.html';
+      if (currentFile === '') currentFile = 'index.html';
+      if (!linkFile || linkFile !== currentFile) return;
+
+      link.classList.add('active');
+      var node = link.parentElement;
+      while (node && node.id !== 'wiki-sidebar') {
+        if (node.classList && node.classList.contains('sidebar-pages')) {
+          node.classList.add('open');
+          var btn = node.previousElementSibling;
+          if (btn) btn.classList.add('open');
+        }
+        node = node.parentElement;
+      }
+    });
+
+    // Scroll suave para anchors
+    document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+      a.addEventListener('click', function(e) {
+        e.preventDefault();
+        var target = document.querySelector(a.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  }
+
+  /* ── Toast ─────────────────────────────── */
+  function showToast(msg) {
+    var t = document.getElementById('copy-toast');
+    if (!t) return;
+    if (msg) t.innerHTML = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2200);
+  }
+  window.showWikiToast = showToast;
+
+  /* ── Init ──────────────────────────────── */
+  function init() {
+    injectLayout();
+    bindEvents();
+    if (typeof initSearch === 'function') initSearch();
+    if (typeof window.initWikiBackground === 'function') window.initWikiBackground();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+})();
+
+} // fin guard _layoutLoaded

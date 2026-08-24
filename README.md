@@ -150,3 +150,115 @@ No hace falta buscar y reemplazar en varios HTML.
 5. Para usar el dominio `wiki.planetmc.net`, agregá un archivo `CNAME` en la
    raíz con `wiki.planetmc.net` y configurá un registro CNAME en tu DNS
    apuntando a `TU-USUARIO.github.io`.
+
+
+---
+
+## Novedades v2 (rediseño de agosto 2026)
+
+**Home nueva** — el contenido de `bienvenida` en `wiki-data.js` ahora usa:
+`.home-hero` (+ `.home-hero-copy`, `.home-eyebrow`, `.home-lede`, `.home-hero-planet`),
+`.home-search` (botón que abre el buscador ⌘K), `.ip-cards` > `.ip-card.java/.bedrock`
+y `.step-strip` > `.step-card` (`.step-num` + `.step-body`).
+
+**Buscador ⌘K** — `initCmdK()` en `assets/js/search.js`. Se abre con
+`Ctrl/⌘ + K`, con `/`, o con cualquier elemento que llame a `window.openWikiSearch()`.
+Usa el mismo índice de `WIKI_DATA`, así que las páginas nuevas entran solas.
+Las sugerencias rápidas se editan en el array `SUGGESTIONS`.
+
+**Riel de contenidos** — el TOC dejó de ser una caja dentro del texto: ahora es un
+riel fijo a la derecha (`.wiki-toc-rail`) con resaltado del apartado que estás
+leyendo y un bloque de "copiar IP". Aparece desde 1380px de ancho y con 3+
+encabezados; se omite en la home.
+
+**Barra de IP en móvil** — `.mobile-ip-bar`, fija abajo en pantallas ≤900px,
+para copiar la IP desde cualquier página.
+
+**Cabecera de página** — `.page-hero` pasó a estar alineada a la izquierda y
+compacta, y los `<h2>` llevan una marca de acento. No hay que cambiar nada en el
+contenido existente: el mismo markup se ve distinto.
+
+
+## Novedades v3 (íconos y estructura)
+
+**Íconos** — se redibujaron los glifos que se leían mal (`scroll`, `coins`, `gem`,
+`hammer`, `handshake`, `wheat`, `footprints`, `pickaxe`, `party-popper`,
+`keyboard`, `trophy`, `rocket`) y se agregaron `book`, `shield-check`,
+`sparkles`, `copy`, `clock`. `Icon()` ahora dibuja a 1.15em con trazo 1.85:
+más grande y más limpio en tamaños chicos. No hay que cambiar ninguna llamada.
+
+**Menú lateral = ruta numerada** — cada categoría muestra su número de paso
+(`01`…`06`) y su ícono en una caja con el color de la categoría; las páginas de
+adentro quedaron como lista de texto, sin ícono, para que el ojo siga la jerarquía
+categoría → página. El color activo de una página lo hereda de su categoría.
+
+**Home = ruta explícita** — las tarjetas de categoría son enlaces y llevan
+"Paso N de 6", así un jugador nuevo sabe por dónde seguir sin leer nada más.
+
+**Cosas que se quitaron por innecesarias:**
+- El bloque "¿Por qué jugar en PlanetMC?" de la home — era marketing duplicado de
+  planetmc.net; la wiki tiene que responder preguntas, no vender el servidor.
+- La barra de progreso de lectura — el riel de contenidos ya dice dónde estás.
+- Los íconos repetidos en cada página del menú lateral y en las tarjetas.
+- El polvo cósmico animado en pantallas de menos de 900px (solo costaba batería).
+
+
+## Novedades v4 (estructura de contenido y lenguaje)
+
+**Kits ya no es una página** — su contenido vive ahora como sección `#kits` dentro de
+`Tienda Web y Rangos` (los kits dependen del rango). Se borró `pages/kits.html` y
+los enlaces viejos apuntan a `tienda-web.html#kits`.
+
+**Un solo comando de kits: `/kits`** — abre el menú, que muestra el contenido de cada
+kit y cuáles puede reclamar el jugador. Se quitaron `/kit inicio` y `/kit <nombre>`.
+
+**Rangos donador**: VOID · NOVA · LUNAR · METEOR · ECLIPSE. ECLIPSE reclama los kits
+de todos los rangos anteriores y tiene `/fly`.
+
+**Página nueva: Votar por el Servidor** (`pages/votar.html`, categoría Economía y
+Comercio, antes de Crates) con botón directo a
+`https://www.40servidoresmc.es/planetmc/votar`, el comando `/votar` y los pasos.
+También se agregó "Votar" al footer y un aviso en `Eventos y Votaciones` que enlaza ahí.
+
+**Lenguaje neutro** — se reemplazó todo el voseo por tuteo neutro en `wiki-data.js`,
+`layout.js`, `main.js` y `search.js`: "Seguí con" → "Sigue con", "podés" → "puedes",
+"tenés" → "tienes", "Leé" → "Lee", "acá" → "aquí", etc. (más de 200 reemplazos).
+Si agregas contenido nuevo, escribí en esa misma forma: **tú**, sin "-á/-és/-ís".
+
+
+## Novedades v5 (estructura de navegación en 3 niveles)
+
+El menú lateral ahora tiene **grupo → categoría → (subcategoría) → página**, como una
+wiki de servidor grande:
+
+```
+Bienvenida
+INFORMACIÓN
+  Normas                     ← categoría de una sola página: enlace directo
+EMPEZAR
+  Cómo Ingresar ›            Java · Bedrock
+MODOS DE JUEGO
+  Survival ⌄
+    Primeros Pasos ›
+    Territorio y Recursos ›  Recursos · Protecciones · Bóvedas
+    Economía y Comercio ›    Economía · Tiendas · Trabajos · Misiones
+    Recompensas ›            Votar · Crates
+    Comunidad y PvP ›        Clanes · Chat · PvP · KOTH · Eventos · Rangos Sociales
+    Rangos y Tienda ›        Tienda Web y Rangos
+AYUDA
+  Ayuda ›                    Comandos · FAQ · Soporte
+```
+
+**Cómo se define** en `data/wiki-data.js`: cada categoría admite
+
+- `group`: título de sección del menú (se dibuja una vez por grupo, en orden);
+- `pages`: páginas directas — si hay **una sola**, se dibuja como enlace, sin flecha;
+- `subcats`: `[{ id, name, icon, pages: [...] }]` para partir una categoría grande.
+
+Al final del archivo, un pequeño bloque aplana `subcats` en `cat.pages`, así el
+buscador, el footer, el breadcrumb y las tarjetas de la home siguen funcionando sin
+cambios. **Para agregar un modo de juego nuevo** (por ejemplo *Skyblock*), copia el
+bloque de `survival` con su propio `id`, `color` y sus `subcats`.
+
+También: la entrada del contenido pasó a ser una animación CSS (`wiki-content-in`),
+ya no depende de JS.
