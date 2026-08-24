@@ -83,16 +83,19 @@
   function initBackground() {
     starCanvas = document.getElementById('starCanvas');
     dustCanvas = document.getElementById('dustCanvas');
-    if (!starCanvas || !dustCanvas) return;
+    if (!starCanvas) return;
 
     reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     starCtx = starCanvas.getContext('2d');
-    dustCtx = dustCanvas.getContext('2d');
 
     resizeStarCanvas(); initStars(); drawStars();
-    resizeDust(); initDust(); drawDust();
 
-    window.addEventListener('resize', () => { resizeStarCanvas(); initStars(); resizeDust(); initDust(); });
+    // El polvo cósmico es decoración: se omite en pantallas chicas (rendimiento)
+    var wantDust = dustCanvas && innerWidth >= 900;
+    if (wantDust) { dustCtx = dustCanvas.getContext('2d'); resizeDust(); initDust(); drawDust(); }
+    else if (dustCanvas) { dustCanvas.style.display = 'none'; }
+
+    window.addEventListener('resize', () => { resizeStarCanvas(); initStars(); if (wantDust) { resizeDust(); initDust(); } });
     window.addEventListener('scroll', () => { scrollY_ = window.scrollY; }, { passive: true });
   }
 

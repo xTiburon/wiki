@@ -714,3 +714,461 @@ code {
   .page-hero-icon { font-size: 2.4rem; }
   .wiki-btn { width: 100%; justify-content: center; }
 }
+
+
+/* ═══════════════════════════════════════════════════════
+   v2 — Home rediseñada, riel de contenidos, buscador ⌘K
+   y barra de IP en móvil.  (agregado 2026-08)
+   ═══════════════════════════════════════════════════════ */
+
+/* ── La home respira un poco más ancha ─── */
+.wiki-content-wrap:has(.home-hero) { max-width: 960px; }
+
+/* ── HOME: hero asimétrico ─────────────── */
+.home-hero {
+  display: grid; grid-template-columns: minmax(0,1fr) 190px;
+  gap: 36px; align-items: center; margin: 4px 0 30px;
+}
+.home-hero-copy { display: flex; flex-direction: column; gap: 14px; }
+.home-eyebrow {
+  font-family: var(--font-mono); font-size: 1rem; letter-spacing: 2.5px;
+  text-transform: uppercase; color: var(--violet);
+}
+.home-hero h1 {
+  font-size: clamp(1.9rem, 4vw, 2.7rem); line-height: 1.08;
+  margin: 0; text-wrap: balance;
+}
+.home-lede { font-size: 1.05rem; color: var(--text-mid); max-width: 46ch; margin: 0; line-height: 1.6; }
+.home-hero-planet {
+  width: 190px; height: 190px; object-fit: contain; justify-self: end;
+  filter: drop-shadow(0 0 46px rgba(139,107,242,.45));
+  animation: home-float 9s ease-in-out infinite;
+}
+@keyframes home-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+
+/* ── HOME: disparador del buscador ─────── */
+.home-search {
+  display: flex; align-items: center; gap: 12px; width: 100%; max-width: 520px;
+  margin-top: 6px; padding: 13px 16px; text-align: left;
+  background: var(--surface); border: 1px solid rgba(92,225,255,.35);
+  border-radius: var(--radius-md); color: var(--text-dim);
+  font-family: var(--font-body); font-weight: 600; font-size: .95rem;
+  box-shadow: 0 0 30px -10px rgba(92,225,255,.28);
+  transition: border-color var(--transition), box-shadow var(--transition), color var(--transition);
+}
+.home-search:hover { border-color: rgba(92,225,255,.7); color: var(--text); box-shadow: 0 0 34px -8px rgba(92,225,255,.4); }
+.home-search:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+.home-search svg { width: 17px; height: 17px; color: var(--cyan); flex-shrink: 0; }
+.home-search .hs-label { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.kbd {
+  font-family: var(--font-mono); font-size: .95rem; line-height: 1.2;
+  border: 1px solid var(--border-strong); border-radius: 5px;
+  padding: 1px 7px; color: var(--text); background: rgba(255,255,255,.03);
+}
+
+/* ── HOME: tarjetas de IP ──────────────── */
+.ip-cards { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px; margin-bottom: 8px; }
+.ip-card {
+  display: flex; flex-direction: column; gap: 7px;
+  padding: 15px 18px; border-radius: var(--radius-md); border: 1px solid;
+  cursor: pointer; user-select: none; transition: all var(--transition);
+}
+.ip-card-label { font-family: var(--font-body); font-weight: 700; font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; }
+.ip-card-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-width: 0; }
+.ip-card-ip { font-family: var(--font-mono); font-size: 1.4rem; color: var(--text-bright); letter-spacing: .5px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ip-card-btn { font-family: var(--font-body); font-weight: 700; font-size: .72rem; letter-spacing: .08em; border: 1px solid; border-radius: 6px; padding: 4px 10px; }
+.ip-card.java    { background: rgba(232,130,58,.06); border-color: rgba(232,130,58,.35); }
+.ip-card.java .ip-card-label, .ip-card.java .ip-card-btn { color: var(--java); border-color: rgba(232,130,58,.45); }
+.ip-card.java:hover { border-color: rgba(232,130,58,.75); background: rgba(232,130,58,.11); }
+.ip-card.bedrock { background: rgba(61,220,132,.05); border-color: rgba(61,220,132,.32); }
+.ip-card.bedrock .ip-card-label, .ip-card.bedrock .ip-card-btn { color: var(--bedrock); border-color: rgba(61,220,132,.42); }
+.ip-card.bedrock:hover { border-color: rgba(61,220,132,.7); background: rgba(61,220,132,.1); }
+
+/* ── HOME: los 3 primeros pasos ────────── */
+.step-strip { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-bottom: 26px; }
+.step-card {
+  display: flex; gap: 14px; padding: 17px 18px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-md); transition: all var(--transition);
+}
+.step-card:hover { border-color: rgba(92,225,255,.45); background: var(--surface-strong); transform: translateY(-2px); }
+.step-num { font-family: var(--font-mono); font-size: 1.7rem; line-height: 1; color: var(--cyan); flex-shrink: 0; }
+.step-body { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.step-title { font-family: var(--font-display); font-weight: 700; font-size: .96rem; color: var(--text-bright); }
+.step-desc { font-size: .84rem; color: var(--text-dim); line-height: 1.5; }
+
+/* ── Tarjetas de categoría: acento en el borde ── */
+.wiki-categories-grid { grid-template-columns: repeat(auto-fill, minmax(270px,1fr)); gap: 14px; }
+.wiki-cat-card { padding: 18px; border-radius: var(--radius-md); border-left: 2px solid var(--cat-color, var(--cyan)); }
+.wiki-cat-card::after { display: none; }
+.wiki-cat-card:hover { transform: translateY(-2px); }
+.wiki-cat-icon { width: 38px; height: 38px; border-radius: var(--radius-sm); }
+.wiki-cat-header { margin-bottom: 10px; gap: 10px; }
+
+/* ── RIEL DE CONTENIDOS (TOC pegajoso) ── */
+.wiki-toc-rail {
+  position: fixed; top: calc(var(--nav-h) + 40px); right: 24px; width: 196px;
+  z-index: 200; display: flex; flex-direction: column; gap: 18px;
+  max-height: calc(100vh - var(--nav-h) - 80px); overflow-y: auto;
+}
+.rail-title { font-family: var(--font-body); font-weight: 700; font-size: .68rem; letter-spacing: .16em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 10px; }
+.rail-list { list-style: none; display: flex; flex-direction: column; gap: 1px; border-left: 1px solid var(--border); }
+.rail-list a {
+  display: block; padding: 5px 0 5px 12px; margin-left: -1px;
+  border-left: 2px solid transparent;
+  font-size: .82rem; font-weight: 600; color: var(--text-dim);
+  transition: color var(--transition), border-color var(--transition);
+}
+.rail-list a:hover { color: var(--text-bright); }
+.rail-list a.active { color: var(--cyan); border-left-color: var(--cyan); }
+.rail-list .rail-sub a { padding-left: 24px; font-weight: 500; font-size: .78rem; }
+.rail-connect { border: 1px solid var(--border); border-radius: var(--radius-md); padding: 12px; }
+.rail-connect .ip-card-ip { font-size: 1.05rem; }
+.rail-connect-sub { font-family: var(--font-mono); font-size: .9rem; color: var(--text-dim); margin-top: 2px; }
+.rail-copy-btn {
+  display: block; width: 100%; margin-top: 9px; padding: 6px 0; text-align: center;
+  background: none; border: 1px solid rgba(92,225,255,.4); border-radius: 7px;
+  font-family: var(--font-body); font-weight: 700; font-size: .72rem; letter-spacing: .08em;
+  color: var(--cyan); transition: all var(--transition);
+}
+.rail-copy-btn:hover { background: rgba(92,225,255,.12); border-color: var(--cyan); }
+.rail-copy-btn:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+@media (max-width: 1379px) { .wiki-toc-rail { display: none; } }
+
+/* ── BUSCADOR ⌘K ───────────────────────── */
+.cmdk-backdrop {
+  position: fixed; inset: 0; z-index: 900; display: none;
+  background: rgba(5,6,10,.72); backdrop-filter: blur(4px);
+}
+.cmdk-backdrop.open { display: block; }
+.cmdk {
+  position: absolute; top: 14vh; left: 50%; transform: translateX(-50%);
+  width: min(560px, calc(100vw - 32px));
+  background: var(--void-2); border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md); box-shadow: var(--shadow-soft); overflow: hidden;
+}
+.cmdk-row { display: flex; align-items: center; gap: 11px; padding: 15px 18px; border-bottom: 1px solid var(--border); }
+.cmdk-row svg { width: 17px; height: 17px; color: var(--cyan); flex-shrink: 0; }
+.cmdk-row input {
+  flex: 1; background: none; border: none; outline: none;
+  font-family: var(--font-body); font-weight: 600; font-size: 1rem; color: var(--text-bright);
+}
+.cmdk-row input::placeholder { color: var(--text-dim); }
+.cmdk-results { max-height: 52vh; overflow-y: auto; }
+.cmdk-hint {
+  display: flex; gap: 16px; padding: 10px 18px; border-top: 1px solid var(--border);
+  font-family: var(--font-mono); font-size: .9rem; color: var(--text-dim); letter-spacing: .5px;
+}
+.cmdk-chips { display: flex; flex-wrap: wrap; gap: 7px; padding: 14px 18px; }
+.cmdk-chip {
+  font-family: var(--font-mono); font-size: .95rem; color: var(--text);
+  background: none; border: 1px solid var(--border-strong); border-radius: 6px; padding: 4px 10px;
+  transition: all var(--transition);
+}
+.cmdk-chip:hover { border-color: rgba(92,225,255,.55); color: var(--cyan); }
+.cmdk-chip:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+
+/* ── BARRA DE IP EN MÓVIL ──────────────── */
+.mobile-ip-bar { display: none; }
+@media (max-width: 900px) {
+  .mobile-ip-bar {
+    display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 380;
+    align-items: center; gap: 10px; padding: 9px 14px;
+    background: rgba(9,11,20,.94); backdrop-filter: blur(12px);
+    border-top: 1px solid var(--border);
+  }
+  .mobile-ip-bar .ip-copy { flex: 1; justify-content: center; font-size: .98rem; padding: 7px 10px; }
+  #back-to-top { bottom: 68px; }
+  #wiki-footer { padding-bottom: 68px; }
+}
+
+/* ── Cabecera de página: alineada a la izquierda y compacta ── */
+.page-hero {
+  text-align: left; padding: 0 0 22px; margin-bottom: 26px;
+  background: none; border: none; border-bottom: 1px solid var(--border);
+  border-radius: 0;
+}
+.page-hero::before { display: none; }
+.page-hero-icon {
+  font-size: 1.5rem; margin-bottom: 10px; display: inline-flex;
+  align-items: center; justify-content: center; width: 40px; height: 40px;
+  border: 1px solid var(--border-strong); border-radius: var(--radius-sm);
+  color: var(--cyan);
+}
+.page-hero h1 { margin-bottom: 10px; }
+.page-hero-desc { margin: 0; max-width: 60ch; font-size: 1rem; }
+
+/* ── H2 con marca de acento ─────────────── */
+.wiki-content-wrap h2::before {
+  content: ''; width: 3px; height: 1em; flex-shrink: 0;
+  background: var(--cyan); border-radius: 2px;
+}
+
+/* ── HOME responsive ───────────────────── */
+@media (max-width: 1250px) {
+  .ip-card-ip { font-size: 1.15rem; }
+  .step-strip { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .step-strip .step-card:last-child { grid-column: 1 / -1; }
+}
+@media (max-width: 1000px) {
+  .step-strip { grid-template-columns: 1fr; }
+  .step-strip .step-card:last-child { grid-column: auto; }
+}
+
+@media (max-width: 860px) {
+  .home-hero { grid-template-columns: 1fr; gap: 20px; }
+  .home-hero-planet { width: 108px; height: 108px; justify-self: start; order: -1; }
+  .step-strip { grid-template-columns: 1fr; }
+  .ip-cards { grid-template-columns: 1fr; }
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   v3 — íconos y estructura  (agregado 2026-08)
+   ═══════════════════════════════════════════════════════ */
+
+.icon { vertical-align: -.17em; }
+
+/* ── SIDEBAR: ruta numerada ────────────── */
+.sidebar-cat-btn { gap: 9px; padding: 9px 8px; font-size: .9rem; }
+.cat-step {
+  font-family: var(--font-mono); font-size: .95rem; line-height: 1;
+  color: var(--text-dim); width: 17px; flex-shrink: 0; text-align: left;
+  transition: color var(--transition);
+}
+.cat-icon {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; flex-shrink: 0; font-size: 1rem;
+  border: 1px solid var(--border); border-radius: 7px;
+  color: var(--cat-color, var(--cyan)); background: rgba(255,255,255,.03);
+  transition: border-color var(--transition), background var(--transition);
+}
+.sidebar-cat-btn:hover .cat-icon,
+.sidebar-cat-btn.open .cat-icon { border-color: color-mix(in oklab, var(--cat-color, #5ce1ff) 45%, transparent); background: color-mix(in oklab, var(--cat-color, #5ce1ff) 12%, transparent); }
+.sidebar-cat-btn.open .cat-step { color: var(--cat-color, var(--cyan)); }
+.sidebar-cat-btn.open .cat-name { color: var(--text-bright); }
+
+/* Las páginas de la categoría se leen como una lista, sin íconos que compitan */
+.sidebar-page-link { padding-left: 46px; font-size: .855rem; }
+.sidebar-page-link::before { left: 32px; }
+.sidebar-page-link.active { border-left-color: var(--cat-color, var(--cyan)); color: var(--cat-color, var(--cyan)); background: color-mix(in oklab, var(--cat-color, #5ce1ff) 10%, transparent); }
+.sidebar-page-link.active::before { color: var(--cat-color, var(--cyan)); }
+.sidebar-page-link.sidebar-standalone { padding-left: 12px; }
+
+/* ── Ícono de la cabecera de página ────── */
+.page-hero-icon { font-size: 1.15rem; color: var(--cyan); }
+
+/* ── Íconos dentro de los H2: acompañan, no compiten ── */
+.wiki-content-wrap h2 .icon { color: var(--text-mid); }
+.wiki-breadcrumb .icon { color: var(--text-dim); }
+
+/* ── Íconos de avisos alineados con la primera línea ── */
+.alert-icon { display: inline-flex; align-items: center; font-size: 1rem; margin-top: 2px; }
+.alert-info .alert-icon  { color: var(--cyan); }
+.alert-warn .alert-icon  { color: var(--gold); }
+.alert-danger .alert-icon{ color: var(--danger); }
+.alert-todo .alert-icon  { color: var(--violet); }
+
+/* ── HOME: tarjetas de categoría como pasos de la ruta ── */
+.wiki-cat-card { display: block; }
+.wiki-cat-step {
+  font-family: var(--font-mono); font-size: .9rem; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--cat-color, var(--cyan)); margin-bottom: 9px;
+}
+.wiki-cat-icon {
+  color: var(--cat-color, var(--cyan));
+  border: 1px solid color-mix(in oklab, var(--cat-color, #5ce1ff) 35%, transparent);
+  background: color-mix(in oklab, var(--cat-color, #5ce1ff) 10%, transparent);
+}
+.wiki-cat-page-link { cursor: inherit; }
+.wiki-cat-page-link:hover { background: none; color: var(--text-dim); }
+.wiki-cat-card:hover .wiki-cat-page-link { color: var(--text); }
+
+/* ── Íconos de las tarjetas destacadas y de los pasos ── */
+.feature-icon { font-size: 1.35rem; color: var(--cyan); margin-bottom: 8px; }
+.cmd-item code .icon { color: inherit; }
+
+/* Lista de páginas dentro de la tarjeta de categoría: más compacta */
+.wiki-cat-pages { gap: 0; }
+.wiki-cat-page-link { padding: 4px 8px; font-size: .845rem; }
+
+/* Rango más alto de la tienda: se distingue del resto de la escalera */
+.rank-eclipse {
+  background: linear-gradient(160deg, rgba(255,209,102,.12), rgba(139,107,242,.12));
+  border-color: rgba(255,209,102,.45);
+  box-shadow: 0 0 24px -12px rgba(255,209,102,.5);
+}
+.rank-eclipse .rank-badge { color: var(--gold); }
+
+
+/* ═══════════════════════════════════════════════════════
+   v5 — menú lateral en 3 niveles: grupo → categoría → página
+   ═══════════════════════════════════════════════════════ */
+
+.sidebar-group {
+  font-family: var(--font-body); font-weight: 700; font-size: .68rem;
+  letter-spacing: .18em; text-transform: uppercase; color: var(--text-dim);
+  padding: 0 10px; margin: 20px 0 8px;
+}
+.sidebar-nav > .sidebar-group:first-child { margin-top: 10px; }
+
+/* Categoría de una sola página: enlace directo, sin flecha */
+.sidebar-cat-link {
+  display: flex; align-items: center; gap: 9px;
+  padding: 9px 8px; border-radius: var(--radius-sm);
+  color: var(--text-mid); font-weight: 700; font-size: .9rem;
+  transition: all var(--transition);
+}
+.sidebar-cat-link:hover { background: var(--surface-strong); color: var(--text-bright); }
+.sidebar-cat-link.active { background: color-mix(in oklab, var(--cat-color, #5ce1ff) 12%, transparent); color: var(--text-bright); }
+.sidebar-cat-link.active .cat-icon { border-color: color-mix(in oklab, var(--cat-color, #5ce1ff) 50%, transparent); background: color-mix(in oklab, var(--cat-color, #5ce1ff) 14%, transparent); }
+
+/* Subcategorías dentro de una categoría */
+.sidebar-subcat { margin: 1px 0; }
+.sidebar-sub-btn {
+  width: 100%; display: flex; align-items: center; gap: 8px;
+  background: none; border: none; border-radius: var(--radius-sm);
+  color: var(--text-mid); padding: 7px 8px 7px 14px;
+  font-family: var(--font-body); font-size: .855rem; font-weight: 600;
+  transition: all var(--transition);
+}
+.sidebar-sub-btn:hover { background: var(--surface-strong); color: var(--text-bright); }
+.sidebar-sub-btn.open { color: var(--text-bright); }
+.sidebar-sub-btn .cat-arrow { width: 12px; height: 12px; opacity: .45; transition: transform .25s ease; }
+.sidebar-sub-btn.open .cat-arrow { transform: rotate(90deg); opacity: .9; }
+.sub-icon {
+  display: flex; align-items: center; justify-content: center;
+  width: 18px; flex-shrink: 0; font-size: .95rem;
+  color: var(--cat-color, var(--cyan)); opacity: .85;
+}
+.sidebar-subpages .sidebar-page-link { padding-left: 40px; font-size: .84rem; }
+.sidebar-subpages .sidebar-page-link::before { left: 26px; }
+.sidebar-pages.open { max-height: 1600px; }
+
+/* La ruta numerada quedó reemplazada por los grupos */
+.cat-step { display: none; }
+
+/* Entrada del contenido: por CSS, para que no dependa de JS */
+@keyframes wiki-content-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+.wiki-content-wrap { animation: wiki-content-in .4s var(--ease) both; }
+
+
+/* ═══════════════════════════════════════════════════════
+   v6 — pie de página reorganizado
+   ═══════════════════════════════════════════════════════ */
+
+#wiki-footer { padding: 0; background: var(--void-2); }
+#wiki-footer .footer-top {
+  display: grid; grid-template-columns: minmax(260px, 320px) 1fr;
+  gap: 56px; padding: 44px 48px 36px; align-items: start;
+}
+
+/* ── Marca ─────────────────────────────── */
+.footer-brand { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.footer-logo { display: flex; align-items: center; gap: 11px; }
+.footer-logo-img { width: 40px; height: 40px; object-fit: contain; filter: drop-shadow(0 0 14px rgba(139,107,242,.4)); }
+.footer-logo-text { display: flex; flex-direction: column; line-height: 1.15; }
+.footer-logo-text strong { font-family: var(--font-display); font-size: 1.05rem; color: var(--text-bright); letter-spacing: .01em; }
+.footer-logo-text span { font-family: var(--font-mono); font-size: .95rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--cyan); }
+.footer-tagline { font-size: .88rem; line-height: 1.6; color: var(--text-dim); margin: 0; max-width: 34ch; }
+
+/* ── Bloque de conexión ────────────────── */
+.footer-connect { display: flex; flex-direction: column; gap: 8px; margin-top: 2px; }
+.footer-connect-title {
+  font-family: var(--font-body); font-weight: 700; font-size: .66rem;
+  letter-spacing: .18em; text-transform: uppercase; color: var(--text-dim);
+}
+.footer-ip {
+  display: grid; grid-template-columns: 96px 1fr 18px; align-items: center; gap: 10px;
+  width: 100%; padding: 10px 13px; text-align: left;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  transition: all var(--transition);
+}
+.footer-ip-label {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-body); font-weight: 700; font-size: .72rem;
+  letter-spacing: .1em; text-transform: uppercase;
+}
+.footer-ip-val { font-family: var(--font-mono); font-size: 1.05rem; color: var(--text-bright); letter-spacing: .5px; }
+.footer-ip-port { color: var(--text-dim); }
+.footer-ip-copy { color: var(--text-dim); display: flex; transition: color var(--transition); }
+.footer-ip.java .footer-ip-label { color: var(--java); }
+.footer-ip.bedrock .footer-ip-label { color: var(--bedrock); }
+.footer-ip.java:hover    { border-color: rgba(232,130,58,.5); background: rgba(232,130,58,.07); }
+.footer-ip.bedrock:hover { border-color: rgba(61,220,132,.45); background: rgba(61,220,132,.06); }
+.footer-ip:hover .footer-ip-copy { color: var(--cyan); }
+.footer-ip:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+
+/* ── Columnas de enlaces ───────────────── */
+.footer-cols {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 26px 20px; min-width: 0;
+}
+.footer-col { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.footer-col-title {
+  display: flex; align-items: center; gap: 7px; margin-bottom: 7px;
+  font-family: var(--font-body); font-weight: 700; font-size: .74rem;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--text-bright);
+}
+.footer-col-title .icon { color: var(--cyan); }
+#wiki-footer .footer-link {
+  display: block; padding: 3px 0; font-size: .86rem; color: var(--text-dim);
+  transition: color var(--transition), transform var(--transition);
+}
+#wiki-footer .footer-link:hover { color: var(--cyan); transform: translateX(2px); }
+
+/* ── Barra inferior ────────────────────── */
+#wiki-footer .footer-bottom {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 12px;
+  margin: 0 48px; padding: 16px 0 22px;
+  border-top: 1px solid var(--border);
+  font-family: var(--font-mono); font-size: .92rem; color: var(--text-dim); letter-spacing: .5px;
+}
+.footer-meta { display: flex; align-items: center; gap: 18px; }
+.footer-status { display: inline-flex; align-items: center; gap: 7px; color: var(--bedrock); }
+#wiki-footer .footer-link-inline { display: inline; font-family: var(--font-body); font-size: .84rem; }
+
+@media (max-width: 1200px) {
+  #wiki-footer .footer-top { grid-template-columns: 1fr; gap: 32px; padding: 34px 24px 26px; }
+  #wiki-footer .footer-bottom { margin: 0 24px; }
+}
+@media (max-width: 600px) {
+  #wiki-footer .footer-top { padding: 28px 16px 22px; }
+  #wiki-footer .footer-bottom { margin: 0 16px; flex-direction: column; align-items: flex-start; }
+  .footer-cols { grid-template-columns: 1fr 1fr; gap: 22px 14px; }
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   v7 — aviso "Importante": el bloque más visible de la página
+   ═══════════════════════════════════════════════════════ */
+.alert.alert-important {
+  display: block; padding: 18px 20px; margin: 26px 0;
+  background: linear-gradient(160deg, rgba(255,92,106,.13), rgba(255,92,106,.05));
+  border: 1px solid rgba(255,92,106,.45);
+  border-left: 3px solid var(--danger);
+  border-radius: var(--radius-md);
+  box-shadow: 0 0 34px -16px rgba(255,92,106,.55);
+}
+.alert-important-title {
+  display: flex; align-items: center; gap: 9px; margin-bottom: 12px;
+  font-family: var(--font-display); font-weight: 700; font-size: 1rem;
+  letter-spacing: .04em; color: #ff8f9a;
+}
+.alert-important-title .icon { color: var(--danger); }
+.alert-important-list { list-style: none; counter-reset: imp; display: flex; flex-direction: column; gap: 10px; margin: 0; padding: 0; }
+.alert-important-list li {
+  counter-increment: imp; position: relative; padding-left: 34px;
+  font-size: .94rem; line-height: 1.6; color: var(--text);
+}
+.alert-important-list li::before {
+  content: counter(imp);
+  position: absolute; left: 0; top: 1px;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: rgba(255,92,106,.16); border: 1px solid rgba(255,92,106,.5);
+  color: #ff8f9a; font-family: var(--font-display); font-size: .72rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+.alert-important-list strong { color: var(--text-bright); }
+.alert-important-foot { margin: 12px 0 0; font-size: .86rem; color: var(--text-dim); }

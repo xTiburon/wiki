@@ -135,10 +135,28 @@ window._layoutLoaded = true;
       });
     }
 
-    // Categorías expandibles
+    // Categorías: título de grupo → categoría desplegable → (subcategoría) → páginas
+    var lastGroup = null;
     WIKI_DATA.categories.forEach(function(cat) {
+      if (cat.group && cat.group !== lastGroup) {
+        lastGroup = cat.group;
+        html += '<div class="sidebar-group">' + cat.group + '</div>';
+      }
+
       var isOpen = state[cat.id] !== undefined ? state[cat.id] : cat.open;
-      html += '<div class="sidebar-category" data-cat="' + cat.id + '">' +
+      var single = !cat.subcats && cat.pages && cat.pages.length === 1;
+
+      // Una categoría de una sola página se dibuja como enlace directo
+      if (single) {
+        var only = cat.pages[0];
+        var act = isCurrentPage(only.path) ? ' active' : '';
+        html += '<a href="' + resolveLink(only.path) + '" class="sidebar-cat-link' + act + '" style="--cat-color:' + cat.color + '">' +
+          '<span class="cat-icon">' + Icon(cat.icon) + '</span>' +
+          '<span class="cat-name">' + cat.name + '</span></a>';
+        return;
+      }
+
+      html += '<div class="sidebar-category" data-cat="' + cat.id + '" style="--cat-color:' + cat.color + '">' +
         '<button class="sidebar-cat-btn ' + (isOpen ? 'open' : '') + '" data-cat="' + cat.id + '">' +
         '<span class="cat-icon">' + Icon(cat.icon) + '</span>' +
         '<span class="cat-name">' + cat.name + '</span>' +
@@ -146,12 +164,30 @@ window._layoutLoaded = true;
         '</button>' +
         '<div class="sidebar-pages ' + (isOpen ? 'open' : '') + '">';
 
-      cat.pages.forEach(function(page) {
-        var active = isCurrentPage(page.path) ? 'active' : '';
-        html += '<a href="' + resolveLink(page.path) + '" class="sidebar-page-link ' + active + '">' +
-          (page.icon ? '<span class="page-icon">' + Icon(page.icon) + '</span>' : '') +
-          page.name + '</a>';
-      });
+      if (cat.subcats) {
+        cat.subcats.forEach(function(sub) {
+          var subKey  = cat.id + ':' + sub.id;
+          var subOpen = state[subKey] !== undefined ? state[subKey]
+                      : sub.pages.some(function(p) { return isCurrentPage(p.path); });
+          html += '<div class="sidebar-subcat" data-cat="' + subKey + '">' +
+            '<button class="sidebar-sub-btn ' + (subOpen ? 'open' : '') + '" data-cat="' + subKey + '">' +
+            '<span class="sub-icon">' + Icon(sub.icon) + '</span>' +
+            '<span class="cat-name">' + sub.name + '</span>' +
+            '<svg class="cat-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>' +
+            '</button>' +
+            '<div class="sidebar-pages sidebar-subpages ' + (subOpen ? 'open' : '') + '">';
+          sub.pages.forEach(function(page) {
+            html += '<a href="' + resolveLink(page.path) + '" class="sidebar-page-link ' + (isCurrentPage(page.path) ? 'active' : '') + '">' +
+              page.name + '</a>';
+          });
+          html += '</div></div>';
+        });
+      } else {
+        cat.pages.forEach(function(page) {
+          html += '<a href="' + resolveLink(page.path) + '" class="sidebar-page-link ' + (isCurrentPage(page.path) ? 'active' : '') + '">' +
+            page.name + '</a>';
+        });
+      }
 
       html += '</div></div>';
     });
@@ -185,43 +221,62 @@ window._layoutLoaded = true;
 
   function buildFooter() {
     var year = new Date().getFullYear();
+    var site = WIKI_DATA.site;
 
-    // Links de categorías para el footer
-    var catLinks = WIKI_DATA.categories.map(function(cat) {
-      return '<a href="' + resolveLink(cat.pages[0].path) + '" class="footer-link">' + Icon(cat.icon) + ' ' + cat.name + '</a>';
-    }).join('');
-
-    // Links de standalonePages para el footer (excepto bienvenida)
-    var standaloneLinks = '';
-    if (WIKI_DATA.standalonePages) {
-      WIKI_DATA.standalonePages.forEach(function(page) {
-        if (page.id !== 'bienvenida') {
-          standaloneLinks += '<a href="' + resolveLink(page.path) + '" class="footer-link">' +
-            (page.icon ? Icon(page.icon) : '') + ' ' + page.name + '</a>';
-        }
-      });
+    // Columna: una entrada por categoría (con sus subcategorías o páginas debajo)
+    function col(cat) {
+      var items = (cat.subcats || cat.pages).map(function(x) {
+        var target = x.pages ? x.pages[0] : x;
+        return '<a href="' + resolveLink(target.path) + '" class="footer-link">' + x.name + '</a>';
+      }).join('');
+      return '<div class="footer-col">' +
+        '<div class="footer-col-title">' + Icon(cat.icon) + ' ' + cat.name + '</div>' +
+        items + '</div>';
     }
 
-    return '<div class="footer-inner">' +
-      '<div class="footer-brand">' +
-      '<div class="footer-logo"><img src="' + ROOT + 'logo.png" alt="PlanetMC" class="footer-logo-img"></div>' +
-      '<p class="footer-tagline">' + WIKI_DATA.site.tagline + '</p>' +
-      '<div class="footer-ips">' +
-      '<span class="footer-ip-chip java">\u2615 Java: <strong>' + WIKI_DATA.site.javaIP + '</strong></span>' +
-      '<span class="footer-ip-chip bedrock">\uD83D\uDCF1 Bedrock: <strong>' + WIKI_DATA.site.bedrockIP + ':' + WIKI_DATA.site.bedrockPort + '</strong></span>' +
-      '</div></div>' +
-      '<div class="footer-links-col"><div class="footer-col-title">Wiki</div>' +
-      standaloneLinks + catLinks +
+    var cols = WIKI_DATA.categories.map(col).join('');
+
+    var comunidad = '<div class="footer-col">' +
+      '<div class="footer-col-title">' + Icon('users') + ' Comunidad</div>' +
+      '<a href="' + site.discordURL + '" target="_blank" rel="noopener" class="footer-link">Discord</a>' +
+      '<a href="' + site.shopURL + '" target="_blank" rel="noopener" class="footer-link">Tienda oficial</a>' +
+      '<a href="' + site.voteURL + '" target="_blank" rel="noopener" class="footer-link">Votar por el servidor</a>' +
+      '<a href="' + site.mainURL + '" target="_blank" rel="noopener" class="footer-link">planetmc.net</a>' +
+      '</div>';
+
+    return '<div class="footer-top">' +
+        '<div class="footer-brand">' +
+          '<a href="' + resolveLink('index.html') + '" class="footer-logo">' +
+            '<img src="' + ROOT + 'logo.png" alt="' + site.name + '" class="footer-logo-img">' +
+            '<span class="footer-logo-text"><strong>' + site.name + '</strong><span>' + site.wikiTitle + '</span></span>' +
+          '</a>' +
+          '<p class="footer-tagline">' + site.tagline + '. Survival en español para Java y Bedrock, Premium y No Premium.</p>' +
+          '<div class="footer-connect">' +
+            '<div class="footer-connect-title">Entra al servidor</div>' +
+            '<button type="button" class="footer-ip ip-copy java" data-ip="' + site.javaIP + '">' +
+              '<span class="footer-ip-label">' + Icon('coffee') + ' Java</span>' +
+              '<span class="footer-ip-val">' + site.javaIP + '</span>' +
+              '<span class="footer-ip-copy">' + Icon('copy') + '</span>' +
+            '</button>' +
+            '<button type="button" class="footer-ip ip-copy bedrock" data-ip="' + site.bedrockIP + '">' +
+              '<span class="footer-ip-label">' + Icon('smartphone') + ' Bedrock</span>' +
+              '<span class="footer-ip-val">' + site.bedrockIP + '<span class="footer-ip-port">:' + site.bedrockPort + '</span></span>' +
+              '<span class="footer-ip-copy">' + Icon('copy') + '</span>' +
+            '</button>' +
+          '</div>' +
+        '</div>' +
+        '<div class="footer-cols">' + cols + comunidad + '</div>' +
       '</div>' +
-      '<div class="footer-links-col"><div class="footer-col-title">Comunidad</div>' +
-      '<a href="' + WIKI_DATA.site.discordURL + '" target="_blank" class="footer-link">\uD83D\uDCAC Discord</a>' +
-      '<a href="' + WIKI_DATA.site.shopURL + '" target="_blank" class="footer-link">\uD83D\uDED4 Tienda</a>' +
-      '</div></div>' +
       '<div class="footer-bottom">' +
-      '<span>\u00A9 ' + year + ' ' + WIKI_DATA.site.name + ' \u2014 Todos los derechos reservados</span>' +
-      '<span class="footer-version">Minecraft ' + WIKI_DATA.site.version + '</span>' +
+        '<span>\u00A9 ' + year + ' ' + site.name + ' \u2014 Todos los derechos reservados</span>' +
+        '<span class="footer-meta">' +
+          '<span class="footer-status">' + Icon('globe') + ' Minecraft ' + site.version + '</span>' +
+          '<a href="' + resolveLink('pages/soporte.html') + '" class="footer-link footer-link-inline">Soporte</a>' +
+          '<a href="' + resolveLink('pages/normas.html') + '" class="footer-link footer-link-inline">Normas</a>' +
+        '</span>' +
       '</div>';
   }
+
 
   /* ══════════════════════════════════════════════════════════════
      INYECTAR LAYOUT
@@ -278,7 +333,7 @@ window._layoutLoaded = true;
     if (overlay) overlay.addEventListener('click', closeMenu);
 
     // Categorías expandibles
-    document.querySelectorAll('.sidebar-cat-btn').forEach(function(btn) {
+    document.querySelectorAll('.sidebar-cat-btn, .sidebar-sub-btn').forEach(function(btn) {
       btn.addEventListener('click', function() {
         var catId  = btn.dataset.cat;
         var pages  = btn.nextElementSibling;
@@ -311,19 +366,22 @@ window._layoutLoaded = true;
       });
     });
 
-    // Resaltar página activa en sidebar y abrir su categoría
+    // Resaltar página activa y abrir todos sus contenedores (categoría y subcategoría)
     document.querySelectorAll('.sidebar-page-link').forEach(function(link) {
       var linkFile    = link.getAttribute('href').split('/').pop();
       var currentFile = window.location.pathname.split('/').pop() || 'index.html';
       if (currentFile === '') currentFile = 'index.html';
-      if (linkFile && currentFile && linkFile === currentFile) {
-        link.classList.add('active');
-        var pagesDiv = link.closest('.sidebar-pages');
-        if (pagesDiv) {
-          pagesDiv.classList.add('open');
-          var catBtn = pagesDiv.previousElementSibling;
-          if (catBtn) catBtn.classList.add('open');
+      if (!linkFile || linkFile !== currentFile) return;
+
+      link.classList.add('active');
+      var node = link.parentElement;
+      while (node && node.id !== 'wiki-sidebar') {
+        if (node.classList && node.classList.contains('sidebar-pages')) {
+          node.classList.add('open');
+          var btn = node.previousElementSibling;
+          if (btn) btn.classList.add('open');
         }
+        node = node.parentElement;
       }
     });
 
