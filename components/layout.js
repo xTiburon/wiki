@@ -292,9 +292,9 @@ window._layoutLoaded = true;
       '<div class="cosmic-bg" aria-hidden="true"><div class="planet-orb orb-1"></div><div class="planet-orb orb-2"></div></div>' +
       '<canvas id="starCanvas" aria-hidden="true"></canvas>' +
       '<canvas class="dust-canvas" id="dustCanvas" aria-hidden="true"></canvas>' +
-      '<div id="sidebar-overlay" class="sidebar-overlay"></div>' +
       '<header id="wiki-header">' + buildNavbar() + '</header>' +
       '<div id="wiki-layout">' +
+        '<div id="sidebar-overlay" class="sidebar-overlay"></div>' +
         '<aside id="wiki-sidebar" class="wiki-sidebar">' + buildSidebar() + '</aside>' +
         '<main id="wiki-main" class="wiki-main">' +
           '<div class="wiki-content-wrap" id="wiki-content-wrap">' + content + '</div>' +
