@@ -15,14 +15,14 @@
   }
 
   function initStars() {
-    const count = innerWidth < 640 ? 140 : 240;
+    const count = innerWidth < 640 ? 50 : 90;
     stars = Array.from({ length: count }, () => ({
       x: Math.random() * starCanvas.width,
       y: Math.random() * starCanvas.height,
       baseY: 0,
-      r: Math.random() * 1.6 + 0.3,
-      alpha: Math.random(),
-      speed: Math.random() * 0.004 + 0.001,
+      r: Math.random() * 1.0 + 0.2,
+      alpha: Math.random() * 0.3,
+      speed: Math.random() * 0.003 + 0.001,
       dir: Math.random() > 0.5 ? 1 : -1,
       depth: Math.random() * 0.4 + 0.05,
     }));
@@ -34,7 +34,7 @@
     const sf = scrollY_ * 0.05;
     stars.forEach((s) => {
       s.alpha += s.speed * s.dir;
-      if (s.alpha >= 1) { s.alpha = 1; s.dir = -1; }
+      if (s.alpha >= 0.35) { s.alpha = 0.35; s.dir = -1; }
       if (s.alpha <= 0.05) { s.alpha = 0.05; s.dir = 1; }
       const py = (s.baseY - sf * s.depth + starCanvas.height) % starCanvas.height;
       starCtx.beginPath();
@@ -51,14 +51,14 @@
   }
 
   function initDust() {
-    const count = innerWidth < 640 ? 26 : 50;
+    const count = innerWidth < 640 ? 12 : 22;
     dustPts = Array.from({ length: count }, () => ({
       x: Math.random() * dustCanvas.width,
       y: Math.random() * dustCanvas.height,
       vx: (Math.random() - 0.5) * 0.18,
       vy: (Math.random() - 0.5) * 0.18 - 0.04,
       r: Math.random() * 1.4 + 0.3,
-      alpha: Math.random() * 0.3 + 0.05,
+      alpha: Math.random() * 0.12 + 0.03,
       hue: Math.random() > 0.5 ? '150,210,255' : '170,140,255',
     }));
   }
